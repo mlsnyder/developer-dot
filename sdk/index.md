@@ -57,12 +57,6 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
             <td><a href="https://travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK"><img src="https://api.travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK.svg?branch=master&style=plastic" title="Travis CI" alt="Travis CI"></a></td>
             <td><a href="https://github.com/avadev/AvaTax-REST-V2-Ruby-SDK">AvaTax-REST-V2-Ruby-SDK</a></td>
         </tr>
-        <tr>
-            <td>IBM I RPG</td>
-            <td></td>
-            <td></td>
-            <td><a href="https://github.com/avadev/AvaTax-REST-V2-RPGLE-SDK">AvaTax-REST-V2-RPGLE-SDK</a></td>
-        </tr>
     </tbody>
     </table>
 </div>
