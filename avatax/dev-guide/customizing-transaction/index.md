@@ -18,6 +18,7 @@ This chapter is all about customizing your transactions to expand on the capabil
   <li>How the document level properties apply to the transaction, and the impact of line level adjustments.</li>
   <li>How to use multiple addresses at both the document and line levels.</li>
   <li>How reference codes and other user managed meta data can be used for tracking and reporting.</li>
+  <li>How to use the ‘Tax Included’ feature to simplify the dollar value charged to your customers</li>
 </ul>
 
 There are a multitude of use cases and scenarios that exist.  This chapter is about exposing ways in which you can shape your application to meet those needs.

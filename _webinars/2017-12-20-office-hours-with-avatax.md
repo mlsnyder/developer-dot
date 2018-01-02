@@ -1,10 +1,12 @@
 ---
-layout: page
-title: December Webinar
-nav: resources
+layout: webinar
+title: "December Office Hours with AvaTax"
+date: 2017-12-20 11:00
+author: ted.spence
+comments: true
+product: avatax
+doctype: webinar
 ---
-
-<center><h2><a href="https://register.gotowebinar.com/register/2719809517923376642">Sign up for the final AvaTax Webinar of 2017 happening on December 20th!</a></h2></center>
 
 Avalara’s crack team of engineers receives dozens of questions a week from the developers using our APIs, SDKs and documentation, and we want to answer as many as we can.
 
@@ -16,4 +18,4 @@ Ted, Bob and Aaron can answer all these questions and more, so be sure to regist
 
 We’re looking forward to your questions!
 
-<center><h3><a href="https://register.gotowebinar.com/register/2719809517923376642">Sign up now!</a></h3></center>
+<i>Recording coming soon</i>

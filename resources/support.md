@@ -28,6 +28,7 @@ Avalara provides a variety of free and premium support options for customers and
   <h4><a href="https://community.avalara.com/avalara">Ask a question on the Developer Community Forums</a></h4>
   <ul class="normal">
     <li>Discuss your API questions about AvaTax with customers and developers.</li>
+    <li>You can also find lots of information in the <a href="/avatax/dev-guide/">AvaTax Developer Guide</a> and <a href="/api-reference/avatax/rest/v2/">API Reference</a>.</li>
     <li>Most forums posts receive a response within two business days.</li>
     <li>If your question is urgent, please contact customer support by phone at <a href="tel:(877) 780-4848">(877) 780-4848</a>.</li>
   </ul>
@@ -37,6 +38,7 @@ Avalara provides a variety of free and premium support options for customers and
   <h4><a href="https://www1.avalara.com/us/en/products/professional-services.html">Contact Avalara Professional Services</a></h4>
   <ul class="normal">
     <li>Problems that require complex tax and legal advice can be handled by Avalara's professional services team.</li>
+    <li>Your customer account manager can help match you up with the right team in professional services.</li>
     <li>The professional services team can provide custom solutions tailored to your needs.</li>
   </ul>
 </div>

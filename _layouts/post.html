@@ -10,4 +10,9 @@ layout: default
     <p class="byline">By {{page.author}} | {{ page.date | date: "%B %d, %Y"}}</p>
     <p class="blog-content">{{ content }}</p>
     <p class="btn-callout"><a href="/blog" role="button">Back to posts</a></p>
+    <div>
+        {% include blog_subscribe.html %}
+    </div>
 </div>
+
+    

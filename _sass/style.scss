@@ -196,6 +196,12 @@ color: $Medium-grey;
     }
 }
 
+.language-json {
+  @media(min-width: $screen-md-min) {
+      width: $screen-sm-max;
+  }
+}
+
 .slash {
     color: $Disabled;
 }
@@ -327,75 +333,6 @@ header {
                             margin-bottom: 6px;
                         }
                     }
-                }
-            }
-            .hdr-search-icon {
-                &:hover {
-                    background-color: $Ava-orange;
-                }
-                i {
-                    padding-left: 2em;
-                    font-size: 150%;
-                    margin-top: .5em
-                }
-            }
-
-            .hdr-search-form {
-                position: absolute;
-                background: white;
-                border-top: 1px solid $Form-top;
-                border-bottom: 1px solid $Form-bottom;
-                border-left: 1px solid $Form-sides;
-                border-right: 1px solid $Form-sides;
-                top: -32px;
-                width: 400px;
-                padding: 1em 1em 0 1em;
-                z-index: 1000;
-                right: -20em;
-                @media(max-width: $screen-md-max) {
-                    right: 0;
-                }
-
-                @media (min-width: $screen-md-min) {
-                    left: 591px;
-                }
-
-                .close {
-                    margin-top: -5px;
-                    color: #337ab7;
-                    opacity: 1;
-                    &:hover {
-                        color: #286090;
-                        opacity: 1;
-                    }
-                }
-                .row:first-of-type {
-                    padding-bottom: 5px;
-                }
-                .form-group.no-product {
-                    margin-top: 29px;
-                }
-                .form-group:first-of-type {
-                    padding-right: 0;
-                }
-                .form-group:last-of-type {
-                    text-align: right;
-                }
-                label {
-                    color: $Medium-grey;
-                    font-weight: normal;
-                    .capitalize {
-                        text-transform: capitalize;
-                    }
-                }
-                input[type="search"] {
-                    color: $Darkest-grey;
-                    margin-bottom: 5px;
-                    border-collapse: $Rule-grey;
-                }
-                input[type="checkbox"] {
-                    border: 16px solid $Rule-grey;
-                    font-size: 16px;
                 }
             }
         }
@@ -675,7 +612,7 @@ footer {
 
 .mobile-table {
     @media only screen and (max-width: 480px) {
-       overflow-x: auto; 
+       overflow-x: auto;
     }
 }
 

@@ -29,7 +29,6 @@ sections: [
 ]
 
 gems:
-    - algoliasearch-jekyll
     - jekyll-paginate
 
 algolia:
@@ -74,7 +73,9 @@ permalink: blog/:year/:month/:day/:title/
 excerpt_separator: <!--more-->
 
 collections:
-    permalink: :basename/
+  webinars:
+    output: true
+    permalink: /:collection/:name
 
 ## Jekyll Archives configuration
 jekyll-archives:
@@ -84,6 +85,3 @@ jekyll-archives:
     category: archive-tag
   permalinks:
     category: 'blog/:name/'
-
-
-

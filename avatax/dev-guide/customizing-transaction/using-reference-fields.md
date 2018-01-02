@@ -10,7 +10,7 @@ disqus: 1
 
 <ul class="pager">
   <li class="previous"><a href="/avatax/dev-guide/customizing-transaction/address-types/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
-  <li class="next"><a href="/avatax/dev-guide/customizing-transaction/chapter-summary/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+  <li class="next"><a href="/avatax/dev-guide/customizing-transaction/using-tax-included/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
 </ul>
 
 AvaTax provides a number of user reference fields for your convenience.  For example, the <code>referenceCode</code> field is an optional field that can be used to tie your transaction back to your accounting system or to link to another transaction. 
@@ -262,5 +262,5 @@ Let's build out final test transaction using everything that we've covered in th
 
 <ul class="pager">
   <li class="previous"><a href="/avatax/dev-guide/customizing-transaction/address-types/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
-  <li class="next"><a href="/avatax/dev-guide/customizing-transaction/chapter-summary/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+  <li class="next"><a href="/avatax/dev-guide/customizing-transaction/using-tax-included/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
 </ul>

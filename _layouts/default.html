@@ -173,41 +173,13 @@
                           <li><a href="/resources/webinars">Webinars</a></li>
                           <!--<li><a href="/resources/preferred-developers">Preferred developers</a></li>-->
                           <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
-                          <!--<li><a href="http://www.info.avalara.com/avalaradevcentral">Developer Webinar Series</a></li>-->
                           <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
                         </ul>
                     </li>
                     <li class="resources visible-xs-block"><a href="/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
                     <li class="resources visible-xs-block"><a href="/blog"><span class="text-uppercase">Developer Blog</span></a></li>
-                    <li class="resources visible-xs-block"><a href="/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
                     <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
-                    <li class="resources visible-xs-block"><a href="/search"><span class="text-uppercase">Search</span></a></li>
-                    <li class="hdr-search-icon hidden-xs">
-                        <i class="mouse glyphicon glyphicon-search mouse"></i>
-                    </li>
-                    <form class="hdr-search-form horizontal hidden-xs hidden">
-                        <div class="row">
-                            {% if product_name %}
-                            <div class="col-md-9"><label><input type="checkbox" id="filterSite"> Search entire site</label></div>
-                            <div class="col-md-3">
-                                <button type="button" class="close" aria-label="Close"><span>&times;</span></button>
-                            </div>
-                            {% else %}
-                            <div class="col-md-12">
-                                <button type="button" class="close" aria-label="Close"><span>&times;</span></button>
-                            </div>
-                            {% endif %}
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-9">
-                                <input class="form-control" type="search" {% if product_name %}placeholder="Search Developer / {{product_name | capitalize}}" {% else %}placeholder="Search" {% endif %}>
-                                <span class="form-control-feedback">!</span>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="submit" class="btn btn-primary" value="Search">
-                            </div>
-                        </div>
-                    </form>
                 </ul>
 
 
