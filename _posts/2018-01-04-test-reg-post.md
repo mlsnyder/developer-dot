@@ -10,4 +10,6 @@ doctype: blog
 disqus: 1
 ---
 
+
+REGULAR POST TEST.
 TEST X3
