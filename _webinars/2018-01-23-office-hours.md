@@ -21,4 +21,4 @@ We'll spend the first 15 minutes talking about how the AvaTax API allows you to 
 	<li>Duration: 30 minutes</li>
 </ul>
 
-<p class="btn-callout"><a href="https://attendee.gotowebinar.com/register/2844076329108782594" role="button">Sign Up Now</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4haeGRupv5k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

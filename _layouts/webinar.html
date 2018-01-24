@@ -14,6 +14,6 @@ layout: default
 
 <div class="half">
     <h1>{{ page.title }}{% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}</h1>
-    <h2>{{ page.date | date: " %A, %B %d, %Y at %I:%M %p"}}</h2>
+    <h2>{{ page.date | date: " %A, %B %d, %Y at %I:%M %p %Z"}}</h2>
     <p class="blog-content">{{ content }}</p>
 </div>
