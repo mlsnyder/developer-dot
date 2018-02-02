@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="robots" content="index,follow" /> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.4 - Document Types | Avalara Developer</title>
+
+    
+    <meta name="description" content="API solutions for end-to-end tax compliance">
+
+    
+    <meta property="og:title" content="2.4 - Document Types | Avalara Developer" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Avalara Developer Network" />
+    <meta property="og:description" content="API solutions for end-to-end tax compliance"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/developer-dot/public/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/developer-dot/public/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/developer-dot/public/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/developer-dot/public/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/developer-dot/public/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/developer-dot/public/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/developer-dot/public/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/developer-dot/public/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/developer-dot/public/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/developer-dot/public/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/developer-dot/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/developer-dot/public/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/developer-dot/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/developer-dot/public/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff ">
+    <meta name="msapplication-TileImage" content="/developer-dot/public/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff ">
+
+    <link rel="stylesheet" href="/developer-dot/public/css/style.css"> 
+    <!-- Adobe Dynamic Tab Manager Tag Manager -->
+    <script src="https://assets.adobedtm.com/bc10a2a9cf337c664f8f74e778a1987125aea184/satelliteLib-0387aefee1ddb8b2a9db7e4165c8d84dc0de8621.js"></script>
+    <!-- End Adobe Dynamic Tab Manager Tag Manager -->
+</head>
+ 
+
+<body id="top" data-product=avaTax>
+    <header>
+        <div class="pageTitle">
+            <a href="/developer-dot/">
+                <img src="/developer-dot/public/images/Avalara_logo.svg" alt="Avalara Developer Network">
+                <span>Developer</span>
+            </a>
+            <span class="slash">/&nbsp;</span><a href="/developer-dot/avatax">avaTax</a>
+        </div>
+        <nav class="navbar navbar-default navbar-static">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav apis ">
+                    <li class="apis visible-xs-block"><a href="/developer-dot/avalara-apis"><span class="text-uppercase">API</span>s</a></li>
+                    <li class="visible-xs-block"><a href="/developer-dot/avatax/dev-guide/"><span class="text-uppercase">AvaTax Developer Guide</span></a></li>
+                    <li class="apis dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">API</span>s <i class="caret"></i></a>
+                        <div class="dropdown-menu dropdown-menu-large">
+                            <div class="row">
+                                <div class="col-md-12"><a href="/developer-dot/avalara-apis">APIs overview</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Tax calculation</h2>
+                                    
+                                    <h4>Avalara AvaTax</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/avatax">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/avatax/dev-guide">Developer Guide</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/avatax/rest/v2">API reference</a></li>
+                                        
+                                        <br/>
+                                        <li><a href="/developer-dot/avatax/use-cases">Use Cases</a></li>
+                                        <li><a href="/developer-dot/avatax/get-started">Start your AvaTax free trial now!</a></li>
+                                    </ul>
+                                     
+                                    <h4>Avalara Communications</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/communications">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/communications/afc-rest">API reference</a></li>
+                                        
+                                    </ul>
+                                     
+                                    <h4>Avalara Excise</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/excise">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/excise/5_18_0">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2>Compliance document management</h2>
+                                    
+                                    <h4>Avalara CertCapture</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/certcapture">Overview</a></li>
+                                        
+                                        <li><a href="http://docs.certcapture6xrest.apiary.io/">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                    <h2>Returns &amp; filing</h2>
+                                     
+                                    <h4>Avalara TrustFile</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/trustfile">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/trustfile/api">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sdk dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">SDK</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li ><a href="/developer-dot/avatax/get-started">Get Started with AvaTax</a></li>
+                            <br/>
+                            <li><a href="/developer-dot/sdk/">The AvaTax SDK</a></li>
+                            <li><a href="/developer-dot/sdk/soap">SOAP SDK</a></li>
+                            <br/>
+                            <li><a target="_blank" href="https://www.nuget.org/packages/Avalara.AvaTax/">Install C# SDK via NuGet</a></li>
+                            <li><a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">Install JRE SDK via Maven</a></li>
+                            <li><a target="_blank" href="https://packagist.org/packages/avalara/avataxclient">Install PHP SDK via Composer</a></li>
+                            <li><a target="_blank" href="https://rubygems.org/gems/avatax">Install Ruby SDK via RubyGems</a></li>
+                            <li><a target="_blank" href="https://www.npmjs.com/package/avatax">Install JavaScript SDK via NPMJS</a></li>
+                        </ul>
+                    </li>
+                    <li class="tests"><a href="/developer-dot/tests/testing-your-integration/"><span class="text-uppercase">Tests</span></a></li>
+                    <!-- removing until the link to the Self-Test is fugured out -->
+                    <!--
+                    <li class="tests dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Tests</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/tests/self-test">Avalara Self-Test Tool</a></li>
+                            <li><a href="/developer-dot/tests/testing-your-integration/">Avalara Test Cases</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="certification dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggel" data-toggle="dropdown"><span class="text-uppercase">Become Certified</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/certification/">Overview</a></li>
+                            <li><a href="/developer-dot/certification/avatax/">Avalara AvaTax</a></li>
+                            <li><a href="/developer-dot/certification/communications-certification/">Avalara Communications</a></li>
+                            <li><a href="/developer-dot/certification/excise/">Avalara Excise</a></li>
+                            <li><a href="/developer-dot/certification/certcapture/">Avalara CertCapture</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Resources</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                          <li><a href="/developer-dot/resources/support">Developer Support Options</a></li>
+                          <li><a href="/developer-dot/blog">Developer Blog</a></li>
+                          <li><a href="/developer-dot/resources/webinars">Webinars</a></li>
+                          <!--<li><a href="/developer-dot/resources/preferred-developers">Preferred developers</a></li>-->
+                          <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
+                          <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/blog"><span class="text-uppercase">Developer Blog</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/developer-dot/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
+                    <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
+                </ul>
+
+
+                <a href="/developer-dot/avatax/signup/" class="btn btn-primary btn-signup">Free Trial</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid dev_guide">
+        
+          
+
+
+<div class="breadcrumbs">
+    <div class="col-md-12">
+        <ul class="pipe">
+            <li><span class="text-uppercase">Tax Calculation API</span>s</li>
+            <li class="text-uppercase"><a href="/developer-dot/avatax">Avalara avaTax</a></li>
+            <li class="text-uppercase">dev guide</li>
+        </ul>
+    </div>
+</div>
+  
+        <section class="row">
+            <main class="col-md-12">
+  
+    <div class="row padding-sides half">
+      <nav class="col-md-3">
+        <div id='the-nav' class='nav wrapper hidden-xs hidden-sm dev-guide-nav' style='height: 100%; overflow-y:auto;'>
+    <h3>Chapters</h3>
+    <ol>
+        <li ><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/">Getting Started with AvaTax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/transactions/">Transactions</a>
+        
+            <ol>
+                <li><a href="/developer-dot/avatax/dev-guide/transactions/simple-transaction/">A Simple Transaction</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/transactions/invoice-lines/">Invoice Lines</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/transactions/should-i-commit/">Should I commit?</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/transactions/document-types/">Document Types</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/transactions/chapter-summary/">Chapter Summary</a></li>
+            </ol>
+            </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/customizing-transaction/">Customizing Your Transactions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/reconciliation/">Reconciliation</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/product-taxability/">Product Taxability</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/discounts-and-overrides/">Discounts and Overrides</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/shipping-and-handling/">Shipping and Handling</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/exemptions/">Exemptions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/locations/">Locations</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Consumer Use Tax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/">Calculating Tax Offline</a>
+            
+        </li>
+    </ol>
+    <!--
+    <h3>Appendices</h3>
+    <ul>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-batch-files/">Appendix: Batch Files</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-business-development/">Appendix: Business Developement</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-cloud-connect/">Appendix: Cloud Connect</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-global-taxes/">Appendix: Global Taxes</a></li>
+    </ul> -->
+
+   <!-- <h3><a href="/developer-dot/avatax/dev-guide/glossary/">Glossary</a></h3> -->
+</div>
+
+      </nav>
+      <main class="col-md-9 small-no-padding">
+        <h1>
+            2.4 - Document Types
+            
+        </h1>
+        <ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/transactions/should-i-commit/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/transactions/chapter-summary/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+<p>We’ve already touched on the differences between the <code>SalesOrder</code> and <code>SalesInvoice</code> document types, but it’s worth delving into more details about these and the other document types.</p>
+
+<p>AvaTax is a full-service engine for calculating transactional taxes, including sales, use, VAT, and many other tax types. In order to properly calculate taxes in these different circumstances, AvaTax must also support a wide variety of transaction types. Let’s continue by reviewing the differences between these transactions types and how to map them to your business processes.</p>
+
+<h3>Transaction Types</h3>
+
+<p>AvaTax supports four basic transaction types - an inventory transfer, a purchase, a return (often called a refund or a reverse transaction), and a sale.  Each transaction type is available in two forms: an invoice form that is permanent, and an order form that is a temporary estimate.</p>
+
+<p>When you combine those together, you get these eight transaction types:</p>
+
+<div class="mobile-table">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Transaction Type</th>
+                <th>Lifetime</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>InventoryTransferInvoice</td>
+                <td>Permanent</td>
+                <td>A finalized shipment of inventory from one location to another</td>
+            </tr>
+            <tr>
+                <td>InventoryTransferOrder</td>
+                <td>Temporary</td>
+                <td>An estimate for shipping inventory from one location to another</td>
+            </tr>
+            <tr>
+                <td>PurchaseInvoice</td>
+                <td>Permanent</td>
+                <td>A purchase made from a vendor</td>
+            </tr>
+            <tr>
+                <td>PurchaseOrder</td>
+                <td>Temporary</td>
+                <td>A quote for identifying estimated tax to pay to a vendor</td>
+            </tr>
+            <tr>
+                <td>ReturnInvoice</td>
+                <td>Permanent</td>
+                <td>A finalized refund given to a customer</td>
+            </tr>
+             <tr>
+                <td>ReturnOrder</td>
+                <td>Temporary</td>
+                <td>A quote for a refund to a customer</td>
+            </tr>
+            <tr>
+                <td>SalesInvoice</td>
+                <td>Permanent</td>
+                <td>A finalized sale made to a customer</td>
+            </tr>
+            <tr>
+                <td>SalesOrder</td>
+                <td>Temporary</td>
+                <td>A quote for a potential sale</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Let’s discuss how all these eight types are different.</p>
+
+<h3>Orders vs Invoices</h3>
+
+<p>Our customers require both the ability to <a class="dev-guide-link" href="/developer-dot/blog/2016/11/04/estimating-tax-with-rest-v2/">estimate tax for a transaction</a>, and to record the actual tax for that transaction. Many customers use AvaTax as a way to predict taxes before taking action - for example, showing “Estimated Tax” on a web storefront. Other customers use AvaTax to calculate taxes only at the moment the transaction occurs - for example when recording a sale in their accounting system.</p>
+
+<p>In AvaTax, an “Order” represents a temporary transaction that is not saved, whereas an “Invoice” represents a permanent transaction that will be maintained. Think about these documents like you are a salesperson:</p>
+<ul class="dev-guide-list">
+    <li>You begin by speaking to a customer and obtaining information about what they would like to purchase. With this information, you construct a <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/">CreateTransaction</a> request.</li>
+    <li>First, you calculate that transaction in AvaTax using a <code>SalesOrder</code> transaction type. This becomes a quote (or lead, or opportunity) that you can share with the customer. The quote is as accurate as the information you have on hand, but you know that the customer will review the quote before making a decision to purchase, so we do not record it in our accounting ledger yet.</li>
+    <li>The customer then reviews the quote and may or may not request changes. It could be that the customer wants to purchase one more line item, or maybe they want the shipping address changed, or maybe they have an exemption certificate they want to provide to change their taxable use conditions. These changes can be recalculated by resubmitting the transaction to AvaTax, each time using the <code>SalesOrder</code> transaction type.</li>
+    <li>If the customer decides to cancel the order, or not to make a purchase, no action is required. You do not need to cancel a <code>SalesOrder</code> - because it has not been recorded as a permanent transaction yet.</li>
+    <li>When the customer does choose to make a purchase, you can then recalculate the transaction in AvaTax using the <code>SalesInvoice</code> transaction type. The <code>SalesInvoice</code> transaction type represents a transaction that has occurred, and can then be recorded, queried, reported on, and eventually filed in a tax return to a taxing authority.</li>
+</ul>
+
+<p>Because every type of transaction must be able to follow this same pattern, AvaTax supports all transaction types as both Orders and Invoices. It’s worth noting that the Invoice transaction types provide a key compatibility between Avalara’s tax calculation API and the Avalara Managed Returns Service. The Managed Returns Service supports filing taxes calculated with AvaTax - but you can only file taxes that were recorded using invoice types! Anything you calculated using an order type is considered a temporary estimate and won’t be reported.</p>
+
+<p>Because order transaction types are temporary documents, it’s also worth noting that your transaction will not be retrievable later. All order transactions will have ID numbers that are -1, indicating that they cannot be fetched back using the API. Invoice transactions have positive ID numbers and can be retrieved back.</p>
+
+<p>Next, let’s describe the various types of transactions and see how they work.</p>
+
+<h3>Sales Transactions</h3>
+
+<p>A <code>SalesOrder</code> or <code>SalesInvoice</code> transaction represents a sale that your company made to a customer. This is by far the most common type of transaction that AvaTax handles. As usual, a SalesOrder is an estimate and a SalesInvoice is a record of a transaction that occurred. Sales transactions are typically used to represent web shopping cart calculations, sales recorded through an accounting or ledger system, or service contracts signed on a particular date for future delivery.</p>
+
+<p>In the case of a Sales transaction, a positive currency value means that your company received money from the customer; and a negative currency value means that your company paid the customer. It is generally expected that sales transactions are reported as positive currency values.</p>
+
+<p>Sales transactions are generally expected to be recorded as they occur. For example, if you calculate an estimate for a customer using a SalesOrder on the 11th of the month, then convert it to a <code>SalesInvoice</code> on the 20th of the month, it is customary to choose the transaction date as the 20th. The AvaTax API natively supports this date behavior - just provide the date field on the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/">CreateTransaction API</a> and your transaction will be recorded on that date.</p>
+
+<h3>Return Transactions</h3>
+
+<p>When a customer changes their mind and asks for a refund, you can process that refund by specifying a <code>ReturnOrder</code> or <code>ReturnInvoice</code> transaction, or you can call the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/RefundTransaction/">RefundTransaction API</a>. This transaction type refers to a reversal of the charges that occurred when you originally made the sale. As usual, the <code>ReturnOrder</code> can be used for estimating and the <code>ReturnInvoice</code> is a permanent record.</p>
+
+<p>A return transaction with a negative currency value refers to money that your company refunded to your customer; a return transaction with a positive currency value represents money the customer gives to your company. It is generally expected that return transactions are reported as negative currency values.</p>
+
+<p>Unlike sales transactions, return transactions have two dates.  The first date is the date when the return occurred, and the second date is the date when the original purchase was made.  Two dates are needed because the tax rate may have changed since the customer made the original purchase!  Here’s how to refund the customer the exact amount they paid originally:</p>
+
+<ul class="dev-guide-list">
+    <li>The <code>date</code> field of your <code>ReturnInvoice</code> is the date when the customer received the refund.  If you are filing tax returns using Avalara's Managed Returns Service, this date controls when the refund will be reported to the tax authority.</li>
+    <li>To specify the date when the original sale occurred, you use a <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/models/TaxOverrideModel/">TaxOverride</a> object in the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/">CreateTransaction API</a>.  Set the <code>type</code> of the tax override to <code>TaxDate</code>, and set the <code>taxDate</code> field to the date when the original purchase occurred.  This will tell AvaTax to calculate the tax amount returned to the customer as of the tax override date.</li>
+    <li>If the customer's original purchase was recorded in AvaTax as a <code>SalesInvoice</code>, you can use the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/RefundTransaction/">RefundTransaction API</a> to automatically refund the exact amount they paid originally.  This API takes care of all the hard work of setting up the tax overrides for you.</li>
+</ul>
+
+<h3>Purchase Transactions</h3>
+
+<p>A purchase transaction represents a purchase made by your company from a vendor. A <code>PurchaseOrder</code> represents a quote you request from a vendor, and a <code>PurchaseInvoice</code> represents a finalized purchase transaction.</p>
+
+<p>In the United States, most vendors will automatically charge and remit transactional taxes on your behalf. However, some companies choose to use AvaTax to identify any discrepancies between the tax rate you were charged by a vendor and the correct tax rate for a product or service. This calculation can assist a company in recovering overpaid taxes, or in identifying any cases where their vendor relationships are not in full compliance with tax laws.</p>
+
+<p>You may use a <code>PurchaseOrder</code> to get an estimate of the tax that you should pay on a transaction, and you may choose to use a <code>PurchaseInvoice</code> to record a transaction that occurred. When reporting a <code>PurchaseInvoice</code>, you may specify the tax amount that you were charged by the vendor and have Avalara calculate the actual tax discrepancy. This allows you to correctly report Consumer Use Tax via Avalara’s Managed Returns Service - we’ll delve further into Consumer Use Tax in <a class="dev-guide-link" href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Chapter 10 - Consumer Use Tax</a>.</p>
+
+<h3>Inventory Transfer Transactions</h3>
+
+<p>Inventory transfers are another way of tracking transactions that have Consumer Use Tax implications. For companies with multiple warehouses and offices, there are tax implications involved in shifting inventory from one location to another.</p>
+
+<p>As with the other document types, an <code>InventoryTransferOrder</code> represents an estimate and an <code>InventoryTransferInvoice</code> represents a permanent transaction. We’ll discuss Consumer Use Tax further in <a class="dev-guide-link" href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Chapter 10 - Consumer Use Tax</a>.</p>
+
+<ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/transactions/should-i-commit/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/transactions/chapter-summary/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+      </main>
+    </div>
+    
+
+
+
+
+
+
+</main>
+        </section>
+          
+        <section class="row padding-sides">
+            <main class="col-md-12"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'developeravalaracom'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</main>
+        </section>
+        
+    </div>
+    <footer>
+        <ul class="global">
+            <li><a href="https://www.avalara.com/"><span class="icon-sphere"></span>Avalara.com</a></li>
+            <li><a href="https://help.avalara.com/"><span class="icon-help"></span>Help Center</a></li>
+        </ul>
+
+
+        <ul class="social">
+            <li class="twitter"><a href="https://twitter.com/avadev">Twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/avalara">Facebook</a></li>
+            <li class="linkedin"><a href="https://www.linkedin.com/company/avalara">LinkedIn</a></li>
+            <li class="youtube"><a href="https://www.youtube.com/user/Avalara1">Youtube</a></li>
+        </ul>
+        
+        
+
+
+        <ul class="legal">
+            <li>&copy; 2017 Avalara, Inc. All rights reserved</li>
+            <li><a href="https://www.avalara.com/site-terms/">Terms of use</a></li>
+            <li><a href="https://www.avalara.com/privacy-policy/">Privacy policy</a></li>
+        </ul>
+
+        <ul class="github">
+            <li class="social github-icon"><a href="https://github.com/Avalara/developer-dot/edit/master/avatax/dev-guide/transactions/document-types.md"><span>GH</span> Edit this page on GitHub</a></li>
+
+        </ul>
+    </footer>
+
+    <script src="/developer-dot/public/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/developer-dot/public/js/vendor/bootstrap.min.js"></script>
+    <script src="/developer-dot/public/js/site.js"></script>
+
+    
+    <script src="/developer-dot/public/js/vendor/aws-sdk-2.5.3.min.js"></script>
+    <script>
+        AWS.config.region = 'us-west-2';
+    </script>
+
+     
+
+    <!-- Adobe Dynamic Tag Manager -->
+    <script type="text/javascript">
+        _satellite.pageBottom();
+    </script>
+    <!-- End Adobe Dynamic Tag Manager -->
+</body>
+
+</html>

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="robots" content="index,follow" /> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.3 - Tax Content API | Avalara Developer</title>
+
+    
+    <meta name="description" content="API solutions for end-to-end tax compliance">
+
+    
+    <meta property="og:title" content="11.3 - Tax Content API | Avalara Developer" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Avalara Developer Network" />
+    <meta property="og:description" content="API solutions for end-to-end tax compliance"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/developer-dot/public/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/developer-dot/public/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/developer-dot/public/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/developer-dot/public/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/developer-dot/public/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/developer-dot/public/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/developer-dot/public/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/developer-dot/public/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/developer-dot/public/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/developer-dot/public/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/developer-dot/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/developer-dot/public/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/developer-dot/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/developer-dot/public/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff ">
+    <meta name="msapplication-TileImage" content="/developer-dot/public/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff ">
+
+    <link rel="stylesheet" href="/developer-dot/public/css/style.css"> 
+    <!-- Adobe Dynamic Tab Manager Tag Manager -->
+    <script src="https://assets.adobedtm.com/bc10a2a9cf337c664f8f74e778a1987125aea184/satelliteLib-0387aefee1ddb8b2a9db7e4165c8d84dc0de8621.js"></script>
+    <!-- End Adobe Dynamic Tab Manager Tag Manager -->
+</head>
+ 
+
+<body id="top" data-product=avaTax>
+    <header>
+        <div class="pageTitle">
+            <a href="/developer-dot/">
+                <img src="/developer-dot/public/images/Avalara_logo.svg" alt="Avalara Developer Network">
+                <span>Developer</span>
+            </a>
+            <span class="slash">/&nbsp;</span><a href="/developer-dot/avatax">avaTax</a>
+        </div>
+        <nav class="navbar navbar-default navbar-static">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav apis ">
+                    <li class="apis visible-xs-block"><a href="/developer-dot/avalara-apis"><span class="text-uppercase">API</span>s</a></li>
+                    <li class="visible-xs-block"><a href="/developer-dot/avatax/dev-guide/"><span class="text-uppercase">AvaTax Developer Guide</span></a></li>
+                    <li class="apis dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">API</span>s <i class="caret"></i></a>
+                        <div class="dropdown-menu dropdown-menu-large">
+                            <div class="row">
+                                <div class="col-md-12"><a href="/developer-dot/avalara-apis">APIs overview</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Tax calculation</h2>
+                                    
+                                    <h4>Avalara AvaTax</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/avatax">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/avatax/dev-guide">Developer Guide</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/avatax/rest/v2">API reference</a></li>
+                                        
+                                        <br/>
+                                        <li><a href="/developer-dot/avatax/use-cases">Use Cases</a></li>
+                                        <li><a href="/developer-dot/avatax/get-started">Start your AvaTax free trial now!</a></li>
+                                    </ul>
+                                     
+                                    <h4>Avalara Communications</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/communications">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/communications/afc-rest">API reference</a></li>
+                                        
+                                    </ul>
+                                     
+                                    <h4>Avalara Excise</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/excise">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/excise/5_18_0">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2>Compliance document management</h2>
+                                    
+                                    <h4>Avalara CertCapture</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/certcapture">Overview</a></li>
+                                        
+                                        <li><a href="http://docs.certcapture6xrest.apiary.io/">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                    <h2>Returns &amp; filing</h2>
+                                     
+                                    <h4>Avalara TrustFile</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/trustfile">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/trustfile/api">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sdk dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">SDK</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li ><a href="/developer-dot/avatax/get-started">Get Started with AvaTax</a></li>
+                            <br/>
+                            <li><a href="/developer-dot/sdk/">The AvaTax SDK</a></li>
+                            <li><a href="/developer-dot/sdk/soap">SOAP SDK</a></li>
+                            <br/>
+                            <li><a target="_blank" href="https://www.nuget.org/packages/Avalara.AvaTax/">Install C# SDK via NuGet</a></li>
+                            <li><a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">Install JRE SDK via Maven</a></li>
+                            <li><a target="_blank" href="https://packagist.org/packages/avalara/avataxclient">Install PHP SDK via Composer</a></li>
+                            <li><a target="_blank" href="https://rubygems.org/gems/avatax">Install Ruby SDK via RubyGems</a></li>
+                            <li><a target="_blank" href="https://www.npmjs.com/package/avatax">Install JavaScript SDK via NPMJS</a></li>
+                        </ul>
+                    </li>
+                    <li class="tests"><a href="/developer-dot/tests/testing-your-integration/"><span class="text-uppercase">Tests</span></a></li>
+                    <!-- removing until the link to the Self-Test is fugured out -->
+                    <!--
+                    <li class="tests dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Tests</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/tests/self-test">Avalara Self-Test Tool</a></li>
+                            <li><a href="/developer-dot/tests/testing-your-integration/">Avalara Test Cases</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="certification dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggel" data-toggle="dropdown"><span class="text-uppercase">Become Certified</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/certification/">Overview</a></li>
+                            <li><a href="/developer-dot/certification/avatax/">Avalara AvaTax</a></li>
+                            <li><a href="/developer-dot/certification/communications-certification/">Avalara Communications</a></li>
+                            <li><a href="/developer-dot/certification/excise/">Avalara Excise</a></li>
+                            <li><a href="/developer-dot/certification/certcapture/">Avalara CertCapture</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Resources</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                          <li><a href="/developer-dot/resources/support">Developer Support Options</a></li>
+                          <li><a href="/developer-dot/blog">Developer Blog</a></li>
+                          <li><a href="/developer-dot/resources/webinars">Webinars</a></li>
+                          <!--<li><a href="/developer-dot/resources/preferred-developers">Preferred developers</a></li>-->
+                          <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
+                          <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/blog"><span class="text-uppercase">Developer Blog</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/developer-dot/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
+                    <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
+                </ul>
+
+
+                <a href="/developer-dot/avatax/signup/" class="btn btn-primary btn-signup">Free Trial</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid dev_guide">
+        
+          
+
+
+<div class="breadcrumbs">
+    <div class="col-md-12">
+        <ul class="pipe">
+            <li><span class="text-uppercase">Tax Calculation API</span>s</li>
+            <li class="text-uppercase"><a href="/developer-dot/avatax">Avalara avaTax</a></li>
+            <li class="text-uppercase">dev guide</li>
+        </ul>
+    </div>
+</div>
+  
+        <section class="row">
+            <main class="col-md-12">
+  
+    <div class="row padding-sides half">
+      <nav class="col-md-3">
+        <div id='the-nav' class='nav wrapper hidden-xs hidden-sm dev-guide-nav' style='height: 100%; overflow-y:auto;'>
+    <h3>Chapters</h3>
+    <ol>
+        <li ><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/">Getting Started with AvaTax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/transactions/">Transactions</a>
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/customizing-transaction/">Customizing Your Transactions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/reconciliation/">Reconciliation</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/product-taxability/">Product Taxability</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/discounts-and-overrides/">Discounts and Overrides</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/shipping-and-handling/">Shipping and Handling</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/exemptions/">Exemptions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/locations/">Locations</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Consumer Use Tax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/">Calculating Tax Offline</a>
+            
+            <ol>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/detecting-a-dropped-connection">Detecting a Dropped Connection</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/retry-or-fallback/">Retry or Fallback</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/tax-content-api/">Tax Content API</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/reconcile-transactions-after-outage/">Reconcile Transactions After Outage</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/chapter-summary/">Chapter Summary</a></li>
+            </ol>
+            
+        </li>
+    </ol>
+    <!--
+    <h3>Appendices</h3>
+    <ul>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-batch-files/">Appendix: Batch Files</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-business-development/">Appendix: Business Developement</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-cloud-connect/">Appendix: Cloud Connect</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-global-taxes/">Appendix: Global Taxes</a></li>
+    </ul> -->
+
+   <!-- <h3><a href="/developer-dot/avatax/dev-guide/glossary/">Glossary</a></h3> -->
+</div>
+
+      </nav>
+      <main class="col-md-9 small-no-padding">
+        <h1>
+            11.3 - Tax Content API
+            
+        </h1>
+        <ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/retry-or-fallback/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/reconcile-transactions-after-outage/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+<h2>The Tax Content API Response</h2>
+
+<p>Avalara’s Tax Content API provides businesses with the content required to calculate tax locally in a disconnected environment. The Content API response includes tax jurisdiction, tax rate, and product/service taxability information for each Tax Code and storefront Location configured in your AvaTax account.
+To begin, let’s take a look at the fields included in a Tax Content API response.</p>
+
+<p>Here are the details for each field included in a Tax Content API response:</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>ScenarioId</th>
+				<th>Field Description</th>
+				<th>Sample Data</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>ScenarioId</td>
+        <td>This field is used to group tax scenarios together. A tax scenario will consist of a single Location and single Tax Code</td>
+        <td>1</td></tr><tr>
+          <td>EffDate</td>
+          <td>The date the tax information becomes effective</td>
+          <td>4/1/2011 12:00:00 AM</td>
+        </tr>
+        <tr>
+          <td>EndDate</td>
+          <td>The date the tax information is no longer effective. Tax data is effective on this date, but is not effective on the following date</td>
+          <td>
+            <span>12/31/9999 12:00:00 AM</span>
+          </td>
+        </tr>
+        <tr>
+          <td>LocationCode</td>
+          <td>Unique location identifier</td>
+          <td>001</td>
+        </tr>
+        <tr>
+          <td>TaxCode</td>
+          <td>Avalara System Tax Code or Custom Tax Code</td>
+          <td>P0000000</td>
+        </tr>
+        <tr>
+          <td>ShipToCity</td>
+          <td>The ship-to city</td>
+          <td>Durham</td>
+        </tr>
+        <tr>
+          <td>ShipToCounty</td>
+          <td>The ship-to county</td>
+          <td>DURHAM</td>
+        </tr>
+        <tr>
+          <td>ShipToState</td>
+          <td>The ship-to state</td>
+          <td>NC</td>
+        </tr>
+        <tr>
+          <td>ShipToPostalCode</td>
+          <td>Postal code associated with the location address</td>
+          <td>27707-1764</td>
+        </tr>
+        <tr>
+          <td>ShipToCountry</td>
+          <td>The ship-to country</td>
+          <td>US</td>
+        </tr>
+        <tr>
+          <td>JurisType</td>
+          <td>The jurisdiction type. There are five supported values - Country, State, County, City, Special</td>
+          <td>State</td>
+        </tr>
+        <tr>
+          <td>JurisCode</td>
+          <td>Unique numeric, alpha, or alphanumeric code identifying a jurisdiction. This field is optional</td>
+          <td>001, EKTF0</td>
+        </tr>
+        <tr>
+          <td>JurisName</td>
+          <td>The name of the jurisdiction that corresponds to this tax record</td>
+          <td>NORTH CAROLINA</td>
+        </tr>
+        <tr>
+          <td>TaxType</td>
+          <td>The tax type associated with the rate</td>
+          <td>Sales</td>
+        </tr>
+        <tr>
+          <td>Tax_Description</td>
+          <td>The description of the tax</td>
+          <td>NC STATE TAX</td>
+        </tr>
+        <tr>
+          <td>Tax_Rate</td>
+          <td>The tax rate. "0.03" corresponds to 3%. Exempt records will have a rate of 0.</td>
+          <td>0.03</td>
+        </tr>
+        <tr>
+          <td>Cap</td>
+          <td>Applies a cap to the taxable amount. Amounts up to the cap are taxable. Amounts over the cap are non-taxable. The tax rate applies to the taxable amount.</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>Threshold</td>
+          <td>Applies a threshold to the taxable amount. Amounts up to and including the threshold are non-taxable. Amounts over the threshold are taxable. The tax rate applies to the taxable amount.</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>TaxRuleOptions</td>
+          <td>Applies a special tax scenario rule to the transaction. There is only one supported value at this time: TaxAll. With a threshold, this rule taxes the entire amount once the total is over the threshold</td>
+          <td>TaxAll</td>
+        </tr>
+        <tr>
+          <td>TaxApplicationLevel</td>
+          <td>This field is not used at this time, but will be leveraged for tax-on-tax scenarios in the future. This field will define the order in which taxes are applied in a tax-on-tax scenario and the tax base for each individual tax</td>
+          <td>N/A</td>
+        </tr>
+      </tbody>
+	</table>  
+</div>
+<p><br /></p>
+
+<h2>Consuming Tax Content</h2>
+
+<p>In order to calculate tax locally, you’ll need to implement logic in your native POS application that can correctly interpret and calculate tax using the data from the Tax Content API. The next sections will review common uses cases for leveraging the Tax Content API results to calculate tax locally.</p>
+
+<h3>Thresholds &amp; Caps</h3>
+
+<p>This section is about interpreting Cap &amp; Threshold values included in Tax Content API results. By the end of this section, you will learn the following</p>
+
+<ul class="dev-guide-list">
+  <li>How to interpret Threshold and Cap values</li>
+  <li>How to interpret TaxRule Options associated with Cap and Threshold values</li>
+</ul>
+
+<h4>Thresholds</h4>
+
+<h5>Assertions</h5>
+
+<p>Address: 82 Smith St, Providence, RI 02903-1105<br />
+Tax Code(s): PC040100</p>
+
+<h5>Expected API Result</h5>
+
+<pre>
+[
+  {
+      "ScenarioId": 1,
+      "EffDate": "12/1/2013 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "RI001",
+      "TaxCode": "PC040100",
+      "ShipToCity": "Providence",
+      "ShipToCounty": "PROVIDENCE",
+      "ShipToState": "RI",
+      "ShipToPostalCode": "02903-1105",
+      "ShipToCountry": "US",
+      "JurisType": "State",
+      "JurisName": "RHODE ISLAND",
+      "TaxType": "Sales",
+      "Tax_Description": "RI STATE TAX",
+      "Tax_Rate": 0.07,
+      "Cap": "0",
+      "Threshold": "250.000000",
+      "TaxRuleOptions": "",
+      "TaxApplicationLevel": ""
+  }
+]
+</pre>
+<p><br /></p>
+
+<p>As noted in Chapter 1, the Threshold field applies a threshold to the taxable amount. Amounts up to and including the threshold are non-taxable. Amounts over the threshold are taxable. The tax rate included in the API response applies to the taxable amount. In this example, the Threshold value is $250, meaning the products you associate with Tax Code PC040100 for this Location would not become taxable until they were sold for more than $250.</p>
+
+<p>Let’s look at a transaction where the LineAmount is $200.00</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>RHODE ISLAND</td>
+        <td>$200.00</td>
+        <td>$0.00</td>
+        <td>0.07</td>
+        <td>$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>No tax should be calculated because the LineAmount is below the $250.00 threshold state in the Tax Content API results.</p>
+
+<p>Now, let’s look at a transaction where the LineAmount is $300.00</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>RHODE ISLAND</td>
+        <td>$300.00</td>
+        <td>$50.00</td>
+        <td>0.07</td>
+        <td>$3.50</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Tax was calculated against $50.00 of the LineAmount because that is the amount that exceeded the $250.00 threshold stated in the Tax Content API results.</p>
+
+<h4>Thresholds and TaxAll TaxRuleOption</h4>
+
+<h5>Assertions</h5>
+
+<p>Location Address: 50 5th Ave, New York, NY 10118<br />
+Tax Code(s): PC040100</p>
+
+<h5>Expected API Result</h5>
+
+<p>Assuming nexus is configured for the state of New York, the Tax Content API will produce the following response for the asserted Address and Tax Code. The Tax Content API will return three records that share a single ScenarioId. These results represent the taxing jurisdictions and their associated tax rules and rates that are applicable to the Location and TaxCode specified in the results. These results should be used in conjunction with one another for the specified LocationCode and TaxCode.</p>
+
+<pre>
+[
+  {
+      "ScenarioId": 1,
+      "EffDate": "4/1/2011 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "NY001",
+      "TaxCode": "PC040100",
+      "ShipToCity": "New York",
+      "ShipToCounty": "NEW YORK",
+      "ShipToState": "NY",
+      "ShipToPostalCode": "10118-0110",
+      "ShipToCountry": "US",
+      "JurisType": "City",
+      "JurisName": "NEW YORK CITY",
+      "TaxType": "Sales",
+      "Tax_Description": "NY CITY TAX",
+      "Tax_Rate": 0.045,
+      "Cap": "0",
+      "Threshold": "110.000000",
+      "TaxRuleOptions": "TaxAll",
+      "TaxApplicationLevel": ""
+  },
+  {
+      "ScenarioId": 1,
+      "EffDate": "4/1/2012 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "NY001",
+      "TaxCode": "PC040100",
+      "ShipToCity": "New York",
+      "ShipToCounty": "NEW YORK",
+      "ShipToState": "NY",
+      "ShipToPostalCode": "10118-0110",
+      "ShipToCountry": "US",
+      "JurisType": "State",
+      "JurisName": "NEW YORK",
+      "TaxType": "Sales",
+      "Tax_Description": "NY STATE TAX",
+      "Tax_Rate": 0.04,
+      "Cap": "0",
+      "Threshold": "110.000000",
+      "TaxRuleOptions": "TaxAll",
+      "TaxApplicationLevel": ""
+  },
+  {
+      "ScenarioId": 1,
+      "EffDate": "4/1/2012 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "NY001",
+      "TaxCode": "PC040100",
+      "ShipToCity": "New York",
+      "ShipToCounty": "NEW YORK",
+      "ShipToState": "NY",
+      "ShipToPostalCode": "10118-0110",
+      "ShipToCountry": "US",
+      "JurisType": "Special",
+      "JurisName": "METROPOLITAN COMMUTER TRANSPORTATION DISTRICT",
+      "TaxType": "Sales",
+      "Tax_Description": "NY SPECIAL TAX",
+      "Tax_Rate": 0.00375,
+      "Cap": "0",
+      "Threshold": "110.000000",
+      "TaxRuleOptions": "TaxAll",
+      "TaxApplicationLevel": ""
+  }
+]
+</pre>
+<p><br /></p>
+
+<p>In this example, the Threshold value is $110 for all three records meaning the products associated with PC040100 for this LocationCode would not become taxable until they were sold for $110.00 or more. Additionally, TaxRuleOptions field includes the “TaxAll” value. With TaxAll, the entire LineAmount becomes taxable once the threshold is met. This is different from the Rhode Island example in the previous section where the amount up to and including the Threshold was bucketed as exempt, while any amount over the Threshold was bucketed as taxable.</p>
+
+<p>Let’s look at a transaction where the LineAmount is $100.00</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>NEW YORK</td>
+        <td>$100.00</td>
+        <td>$0.00</td>
+        <td>0.04</td>
+        <td>$0.00</td>
+      </tr>
+      <tr>
+        <td>NEW YORK CITY</td>
+        <td>$100.00</td>
+        <td>$0.00</td>
+        <td>0.045</td>
+        <td>$0.00</td>
+      </tr>
+      <tr>
+        <td>METROPOLITAN COMMUTER TRANSPORTATION DISTRICT</td>
+        <td>$100.00</td>
+        <td>$0.00</td>
+        <td>0.00375</td>
+        <td>$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>No tax was calculated because the LineAmount was below the $110.00 threshold state in the Tax Content API results.</p>
+
+<p>Now, let’s look at a transaction where the LineAmount is $125.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>NEW YORK</td>
+        <td>$125.00</td>
+        <td>$125.00</td>
+        <td>0.04</td>
+        <td>$5.00</td>
+      </tr>
+      <tr>
+        <td>NEW YORK CITY</td>
+        <td>$125.00</td>
+        <td>$125.00</td>
+        <td>0.045</td>
+        <td>$5.63</td>
+      </tr>
+      <tr>
+        <td>METROPOLITAN COMMUTER TRANSPORTATION DISTRICT</td>
+        <td>$125.00</td>
+        <td>$125.00</td>
+        <td>0.00375</td>
+        <td>$0.47</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Tax was calculated against the entire LineAmount because the LineAmount exceeded the Threshold value and the TaxAll TaxRuleOption was applicable.</p>
+
+<h4>Caps</h4>
+
+<h5>Assertions</h5>
+
+<p>Location Address: 201 Criser Hall, Gainsville, FL 32611<br />
+Tax Code(s): P0000000</p>
+
+<h5>Expected API Result</h5>
+
+<p>Assuming nexus is configured for the state of Florida, the Tax Content API will produce the following response for the asserted Address and Tax Code. The Tax Content API will return two records that share a single ScenarioId. These results represent the taxing jurisdictions and their associated tax rules and rates that are applicable to the Location and TaxCode specified in the results. These results should be used in conjunction with one another for the specified LocationCode and TaxCode.</p>
+
+<pre>
+[
+  {
+      "ScenarioId": 1,
+      "EffDate": "1/1/2017 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "FL",
+      "TaxCode": "P0000000",
+      "ShipToCity": "GAINESVILLE",
+      "ShipToCounty": "ALACHUA",
+      "ShipToState": "FL",
+      "ShipToPostalCode": "32611-4000",
+      "ShipToCountry": "US",
+      "JurisType": "County",
+      "JurisName": "ALACHUA",
+      "TaxType": "Sales",
+      "Tax_Description": "FL COUNTY TAX",
+      "Tax_Rate": 0.005,
+      "Cap": "5000.000000",
+      "Threshold": "0.000000",
+      "TaxRuleOptions": "",
+      "TaxApplicationLevel": ""
+  },
+  {
+      "ScenarioId": 1,
+      "EffDate": "1/1/2017 12:00:00 AM",
+      "EndDate": "12/31/9999 12:00:00 AM",
+      "LocationCode": "FL",
+      "TaxCode": "P0000000",
+      "ShipToCity": "GAINESVILLE",
+      "ShipToCounty": "ALACHUA",
+      "ShipToState": "FL",
+      "ShipToPostalCode": "32611-4000",
+      "ShipToCountry": "US",
+      "JurisType": "State",
+      "JurisName": "FLORIDA",
+      "TaxType": "Sales",
+      "Tax_Description": "FL STATE TAX",
+      "Tax_Rate": 0.06,
+      "Cap": "0.000000",
+      "Threshold": "0.000000",
+      "TaxRuleOptions": "",
+      "TaxApplicationLevel": ""
+  }
+]
+</pre>
+<p><br /></p>
+
+<p>In this example, the Cap value is Null for the State record and is $5,000 for the County record. In this scenario, the State rate applies to the entire LineAmount, while the County rate only applies to the first $5,000 of the LineAmount, “capping” the tax amount.</p>
+
+<p>Let’s look at a transaction where the LineAmount is $4,500.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>FLORIDA</td>
+        <td>$4,500.00</td>
+        <td>$4,500.00</td>
+        <td>0.06</td>
+        <td>$270.00</td>
+      </tr>
+      <tr>
+        <td>ALACHUA</td>
+        <td>$4,500.00</td>
+        <td>$4,500.00</td>
+        <td>0.005</td>
+        <td>$22.50</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Tax was calculated on the full LineAmount for the State because there was no Cap stated in the Tax Content API results.</p>
+
+<p>Tax was calculated on the full LimeAmount for the County because the LineAmount was below the $5,000 Cap stated in the Tax Content API results.</p>
+
+<p>Now, let’s look at a transaction where the LineAmount is $7,000.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>JurisdictionName</th>
+				<th>LineAmount</th>
+				<th>Tax Base</th>
+        <th>Rate</th>
+        <th>Tax</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>FLORIDA</td>
+        <td>$7,000.00</td>
+        <td>$7,000.00</td>
+        <td>0.06</td>
+        <td>$420.00</td>
+      </tr>
+      <tr>
+        <td>ALACHUA</td>
+        <td>$7,000.00</td>
+        <td>$5,000.00</td>
+        <td>0.005</td>
+        <td>$25.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>Tax was again calculated on the full LineAmount for the State because there was no Cap stated in the Tax Content API results.</p>
+
+<p>Tax was only calculated on the first $5,000 for the county because the LineAmount exceeded the $5,000 Cap stated in the Tax Content API results.</p>
+
+<h3>Sales Tax Holidays</h3>
+
+<p>Many states offer annual sales tax holidays, providing a reduction or elimination of sales tax on specific categories of products for a short period of time. This section is about interpreting Tax Content API results for Sales Tax Holidays. By the end of this section, you will learn the following:</p>
+
+<ul class="dev-guide-list">
+  <li>How to interpret Sales Tax Holidays results</li>
+  <li>How to differentiate between Sales Tax Holiday results and normal tax content results</li>
+</ul>
+
+<h4>Sales Tax Holiday Results</h4>
+
+<h5>Assertions</h5>
+
+<p>Address: 2501 4th Ave, Canyon, TX 79016-0001<br />
+Tax Code(s): PC040100 <br />
+DocumentDate: 8/10/2017, 8/11/2017</p>
+
+<h5>Expected API Result</h5>
+
+<p>Assuming nexus is configured for the state of Texas, the Tax Content API will produce the following responses for the asserted Address, Tax Code, and DocumentDates. The Tax Content API will return two records in each response that share a single ScenarioId. These results represent the taxing jurisdictions and their associated tax rules and rates that are applicable to the Location and TaxCode specified in the results. These results should be used in conjunction with one another for the specified LocationCode and TaxCode.</p>
+
+<p><strong>DocumentDate: 8/10/2017</strong></p>
+
+<pre>
+[
+    {
+        "ScenarioId": 1,
+        "EffDate": "8/1/2010 12:00:00 AM",
+        "EndDate": "12/31/9999 12:00:00 AM",
+        "LocationCode": "TX",
+        "TaxCode": "PC040100",
+        "ShipToCity": "Canyon",
+        "ShipToCounty": "RANDALL",
+        "ShipToState": "TX",
+        "ShipToPostalCode": "79016-0001",
+        "ShipToCountry": "US",
+        "JurisType": "City",
+        "JurisName": "CANYON",
+        "TaxType": "Sales",
+        "Tax_Description": "TX CITY TAX",
+        "Tax_Rate": 0.02,
+        "Cap": "0",
+        "Threshold": "0",
+        "TaxRuleOptions": "",
+        "TaxApplicationLevel": ""
+    },
+    {
+        "ScenarioId": 1,
+        "EffDate": "8/1/2010 12:00:00 AM",
+        "EndDate": "12/31/9999 12:00:00 AM",
+        "LocationCode": "TX",
+        "TaxCode": "PC040100",
+        "ShipToCity": "Canyon",
+        "ShipToCounty": "RANDALL",
+        "ShipToState": "TX",
+        "ShipToPostalCode": "79016-0001",
+        "ShipToCountry": "US",
+        "JurisType": "State",
+        "JurisName": "TEXAS",
+        "TaxType": "Sales",
+        "Tax_Description": "TX STATE TAX",
+        "Tax_Rate": 0.0625,
+        "Cap": "0",
+        "Threshold": "0",
+        "TaxRuleOptions": "",
+        "TaxApplicationLevel": ""
+    }
+]
+</pre>
+<p><br /></p>
+
+<p><strong>DocumentDate: 8/11/2017</strong></p>
+
+<pre>
+[
+    {
+        "ScenarioId": 1,
+        "EffDate": "8/11/2017 12:00:00 AM",
+        "EndDate": "8/13/2017 12:00:00 AM",
+        "LocationCode": "TX",
+        "TaxCode": "PC040100",
+        "ShipToCity": "Canyon",
+        "ShipToCounty": "RANDALL",
+        "ShipToState": "TX",
+        "ShipToPostalCode": "79016-0001",
+        "ShipToCountry": "US",
+        "JurisType": "City",
+        "JurisName": "CANYON",
+        "TaxType": "Sales",
+        "Tax_Description": "TX CITY TAX",
+        "Tax_Rate": 0.02,
+        "Cap": "0",
+        "Threshold": "100.000000",
+        "TaxRuleOptions": "TaxAll",
+        "TaxApplicationLevel": ""
+    },
+    {
+        "ScenarioId": 1,
+        "EffDate": "8/11/2017 12:00:00 AM",
+        "EndDate": "8/13/2017 12:00:00 AM",
+        "LocationCode": "TX",
+        "TaxCode": "PC040100",
+        "ShipToCity": "Canyon",
+        "ShipToCounty": "RANDALL",
+        "ShipToState": "TX",
+        "ShipToPostalCode": "79016-0001",
+        "ShipToCountry": "US",
+        "JurisType": "State",
+        "JurisName": "TEXAS",
+        "TaxType": "Sales",
+        "Tax_Description": "TX STATE TAX",
+        "Tax_Rate": 0.0625,
+        "Cap": "0",
+        "Threshold": "100.000000",
+        "TaxRuleOptions": "TaxAll",
+        "TaxApplicationLevel": ""
+    }
+]
+</pre>
+
+<p>In this example, we have two API calls, one with a DocumentDate of 8/10/2017 and another with a DocumentDate of 8/11/2017. You’ll notice, the results of these API calls are different. Specifically, the range of the Effective and End Dates of the second API result fall in between the Effective and End Dates of the first.</p>
+
+<p>If a transaction occurred on or before 8/10/2017, the first response would be applicable because it falls outside of the date range for the SalesTax Holiday Content.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>EffDate</th>
+				<th>EndDate</th>
+				<th>JurisName</th>
+        <th>Tax_Rate</th>
+        <th>Cap</th>
+        <th>Threshold</th>
+        <th>TaxRuleOptions</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr style="background-color:#FFD;">
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr style="background-color:#FFD;">
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>CANYON</td>
+        <td>0.002</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+      <tr>
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>CANYON</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>If a transaction occurred between 8/11/2017 and 8/13/2017, the second response would be applicable and the Threshold and TaxRuleOptions should be applied.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>EffDate</th>
+				<th>EndDate</th>
+				<th>JurisName</th>
+        <th>Tax_Rate</th>
+        <th>Cap</th>
+        <th>Threshold</th>
+        <th>TaxRuleOptions</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr>
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>CANYON</td>
+        <td>0.002</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr style="background-color:#FFD;">
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+      <tr style="background-color:#FFD;">
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>CANYON</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>If a transaction occurred after 8/14/2017, the first response would again be applicable because it falls outside of the date range for the SalesTax Holiday Content.</p>
+
+<div class="mobile-table">
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>EffDate</th>
+				<th>EndDate</th>
+				<th>JurisName</th>
+        <th>Tax_Rate</th>
+        <th>Cap</th>
+        <th>Threshold</th>
+        <th>TaxRuleOptions</th>
+			</tr>
+		</thead>
+    <tbody>
+      <tr style="background-color:#FFD;">
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr style="background-color:#FFD;">
+        <td>8/1/2010</td>
+        <td>12/31/9999</td>
+        <td>CANYON</td>
+        <td>0.002</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>TEXAS</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+      <tr>
+        <td>8/11/2017</td>
+        <td>08/13/2017</td>
+        <td>CANYON</td>
+        <td>0.0625</td>
+        <td>0</td>
+        <td>100.00</td>
+        <td>TaxAll</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p><br /></p>
+
+<p>The Tax Content API only supports a single DocumentDate per API call, but users are able to call the API with a post-dated DocumentDate to retrieve content that will be effective in the future.</p>
+
+<ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/retry-or-fallback/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/reconcile-transactions-after-outage/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+      </main>
+    </div>
+    
+
+
+
+
+
+
+</main>
+        </section>
+          
+        <section class="row padding-sides">
+            <main class="col-md-12"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'developeravalaracom'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</main>
+        </section>
+        
+    </div>
+    <footer>
+        <ul class="global">
+            <li><a href="https://www.avalara.com/"><span class="icon-sphere"></span>Avalara.com</a></li>
+            <li><a href="https://help.avalara.com/"><span class="icon-help"></span>Help Center</a></li>
+        </ul>
+
+
+        <ul class="social">
+            <li class="twitter"><a href="https://twitter.com/avadev">Twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/avalara">Facebook</a></li>
+            <li class="linkedin"><a href="https://www.linkedin.com/company/avalara">LinkedIn</a></li>
+            <li class="youtube"><a href="https://www.youtube.com/user/Avalara1">Youtube</a></li>
+        </ul>
+        
+        
+
+
+        <ul class="legal">
+            <li>&copy; 2017 Avalara, Inc. All rights reserved</li>
+            <li><a href="https://www.avalara.com/site-terms/">Terms of use</a></li>
+            <li><a href="https://www.avalara.com/privacy-policy/">Privacy policy</a></li>
+        </ul>
+
+        <ul class="github">
+            <li class="social github-icon"><a href="https://github.com/Avalara/developer-dot/edit/master/avatax/dev-guide/calculating-tax-offline/tax-content-api.md"><span>GH</span> Edit this page on GitHub</a></li>
+
+        </ul>
+    </footer>
+
+    <script src="/developer-dot/public/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/developer-dot/public/js/vendor/bootstrap.min.js"></script>
+    <script src="/developer-dot/public/js/site.js"></script>
+
+    
+    <script src="/developer-dot/public/js/vendor/aws-sdk-2.5.3.min.js"></script>
+    <script>
+        AWS.config.region = 'us-west-2';
+    </script>
+
+     
+
+    <!-- Adobe Dynamic Tag Manager -->
+    <script type="text/javascript">
+        _satellite.pageBottom();
+    </script>
+    <!-- End Adobe Dynamic Tag Manager -->
+</body>
+
+</html>

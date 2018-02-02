@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Developer </title>
+    <description></description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>TEST - travis</title>
+        <description>&lt;p&gt;I need to test to see if my subscription works.&lt;/p&gt;
+
+&lt;p&gt;test&lt;/p&gt;
+</description>
+        <pubDate>2018-01-02</pubDate>
+        <link>/blog/2018/01/02/TEST/</link>
+        <guid isPermaLink="true">/blog/2018/01/02/TEST/</guid>
+        
+        
+        <category>avatax</category>
+        
+      </item>
+    
+      <item>
+        <title>Reconciling Transactions</title>
+        <description>&lt;center&gt;&lt;img src=&quot;/images/reconciling.jpg&quot; height=&quot;350&quot; width=&quot;75%&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Your host system integration is successfully recording and committing transactions in AvaTax - but what about your audit requirement to ensure all the data in AvaTax matches the host system exactly?  You don’t have to run Excel mashup reports anymore - AvaTax offers a variety of ways to reconcile your transactions and spot discrepancies in an automated fashion.&lt;/p&gt;
+
+&lt;h3&gt;Listing Transactions via the API&lt;/h3&gt;
+
+&lt;p&gt;The first place to start is the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/ListTransactionsByCompany/&quot;&gt;ListTransactionsByCompany&lt;/a&gt; API call in the AvaTax REST namespace.  With this API call, you are able to retrieve all the recorded data in AvaTax and compare with posted host system data for a given date range.  Create either a simple cross-check report which identifies mismatches or get more sophisticated with schemes to auto correct and sync data.&lt;/p&gt;
+
+&lt;p&gt;In this post, we’re going to keep the use case simple and focus on providing a discrepancy report run from the &lt;b&gt;host&lt;/b&gt; system.  In this example, we will match recorded and posted documents in our host system with recorded and committed transactions in AvaTax for the previous month.  We are interested in matching these values; &lt;b&gt;codes&lt;/b&gt;, transaction totalAmount and transaction &lt;b&gt;totalTax&lt;/b&gt;.  Any mismatch of these three key-value pairs with our host data will be treated as a discrepancy on our report.   We are also going to assume we need to implement Paging.  AvaTax allows 1,000 transactions returned per call; so we’re going to assume more than 1,000 transactions get recorded in any reporting period.&lt;/p&gt;
+
+&lt;p&gt;Setting up the ListTransactionsByCompany API parameters:&lt;/p&gt;
+&lt;ol&gt;
+    &lt;li&gt;Specify the AvaTax &lt;b&gt;companyCode&lt;/b&gt; in the GET URL&lt;/li&gt;
+    &lt;li&gt;Our &lt;b&gt;$filter&lt;/b&gt; parameter will be set to date between '2017-12-01' and 2017-12-31'  and &lt;b&gt;status&lt;/b&gt; = 'Committed' (for details on setting rest filters &amp;lt;a href=/avatax/filtering-in-rest/&amp;gt;https://developer.avalara.com/avatax/filtering-in-rest/&amp;lt;/a&amp;gt;)&lt;/li&gt;
+        &lt;ul&gt;&lt;li&gt;Since some customers have very large data sets, the $filter parameter must have date criteria in it.  If you do not provide a date filter, the API will automatically default to looking at the past 30 days worth of transactions.&lt;/li&gt;&lt;/ul&gt;
+    &lt;li&gt;Our &lt;b&gt;$top&lt;/b&gt; parameter will be set to 1000 which is the maximum number of transactions returned on a single request&lt;/li&gt; 
+&lt;/ol&gt;
+
+&lt;p&gt;Example request using AvaTax Sandbox:&lt;/p&gt;
+&lt;div&gt;
+    &lt;code&gt;
+    https://sandbox-rest.avatax.com/api/v2/companies/Z/transactions?$filter=status%20eq%20'Committed'%20and%20date%20between%20'2016-11-01'%20and%20'2016-11-30'&amp;amp;$top=1000
+    &lt;/code&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Example response:&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;@recordsetCount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60933&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;257691378&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;code&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;16-21&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;companyId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;439173&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2016-11-30&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;paymentDate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1900-01-01&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;status&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Committed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SalesInvoice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;batchCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;currencyCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CAD&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerUsageType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;entityUseCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerVendorCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TOB&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;exemptNo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;reconciled&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;purchaseOrderNo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2016-11-28-001&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;salespersonCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxOverrideType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;None&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxOverrideAmount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxOverrideReason&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalAmount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;204.98&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalExempt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;16.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalDiscount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalTax&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;24.57&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalTaxable&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;188.97&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;totalTaxCalculated&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;24.57&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;adjustmentReason&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;NotAdjusted&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;adjustmentDescription&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;locked&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ON&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;softwareVersion&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;16.8.3.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;originAddressId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;658013785&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;destinationAddressId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;658013786&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;exchangeRateEffectiveDate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2016-11-30&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;exchangeRate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;isSellerImporterOfRecord&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;businessIdentificationNo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;modifiedDate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2016-12-06T19:38:55.357&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;modifiedUserId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;248312&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxDate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2016-11-30T00:00:00&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;summary&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;parameters&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;AvaTax.LandedCost.Incoterms&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;DDP&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;AvaTax.LandedCost.ShippingMode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;air&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;@nextLink&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/api/v2/companies/Z/transactions?%24filter=status+eq+%27Committed%27+and+date+between+%272016-11-01%27+and+%272016-11-30%27&amp;amp;%24top=1&amp;amp;%24skip=1000&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Handling Errors&lt;/h3&gt;
+&lt;p&gt;A successful operation will return a Response Code of 200.  You should be able to see at least two name-value pairs in the result, including:&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@recordsetCount&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60933&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@nextLink&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/api/v2/companies/Z/transactions?%24filter=status+eq+%27Committed%27+and+date+between+%272016-11-01%27+and+%272016-11-30%27&amp;amp;%24top=1&amp;amp;%24skip=1000&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The “recordsetCount” value tells us how many transactions match the $filter criteria.  Since each API call can only return a maximum of 1,000 transactions, this will tell you how many times you need to call the API to retrieve everything.  In this example; we will end up calling the API 61 times to get back all 60,933 transactions.&lt;/p&gt;
+
+&lt;p&gt;The “nextLink” value gives us the URL for the next page of information.  If you use this value, AvaTax will keep track of the $skip parameter and allow you to just continue fetching to retrieve the next page of transactions.&lt;/p&gt;
+
+&lt;p&gt;There are a few types of errors to look for when calling the ListTransactionsByCompany API:&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;Did you remember to put the companyCode or valid companyCode in the URL?  If not, you will get an error.&lt;/li&gt;
+    &lt;li&gt;Did you use the proper filter syntax?  If not, you will get an error.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Assuming you collect all the recorded and committed transactions for the reporting period; you can now compare the three values of interest discussed above between the host data and the data retrieved from AvaTax to create a discrepancy report.  Note: you can return even more detailed data to compare with your host data down to the line and tax detail using $include parameter.&lt;/p&gt;
+
+&lt;h3&gt;What's Next&lt;/h3&gt;
+&lt;p&gt;Once your software decides that a transaction is verified, you can take a variety of steps.  The most common step to take is to call &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/VerifyTransaction/&quot;&gt;VerifyTransaction&lt;/a&gt; if you have successfully reconciled the transaction with your host system.  The VerifyTransaction API will update the status of your transaction to Posted.  Alternatively, you could call &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CommitTransaction/&quot;&gt;CommitTransaction&lt;/a&gt; to move the transaction directly to Committed, which allows the transaction to be collected and reported on a tax filing by Avalara’s Managed Returns Service.  If you spot errors, the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/VoidTransaction/&quot;&gt;VoidTransaction&lt;/a&gt; API or &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/AdjustTransaction/&quot;&gt;AdjustTransaction&lt;/a&gt; API can be used to cancel or update transactions and fix discrepancies.&lt;/p&gt;
+
+&lt;p&gt;Yes, you can make it easy for our mutual customers to reconcile their data for accurate reporting and peace of mind!&lt;/p&gt;
+</description>
+        <pubDate>2017-12-27</pubDate>
+        <link>/blog/2017/12/27/reconciling-transactions/</link>
+        <guid isPermaLink="true">/blog/2017/12/27/reconciling-transactions/</guid>
+        
+        
+        <category>avatax</category>
+        
+      </item>
+    
+      <item>
+        <title>Office Hours with AvaTax</title>
+        <description>&lt;p&gt;Avalara’s crack team of engineers receives dozens of questions every week from developers using our APIs, SDKs and documentation, and we want to answer as many as we can.&lt;/p&gt;
+
+&lt;p&gt;To that end, we’re excited to announce a new twice-weekly, 30-minute series of webinars that we’re calling Office Hours with AvaTax. This is your opportunity to ask our expert team of engineers and developers any questions that may be top of your mind about the AvaTax platform in an open Q&amp;amp;A format.&lt;/p&gt;
+
+&lt;p&gt;The new Office Hours with AvaTax series kicks off at 10 a.m. PT on Tuesday, Jan. 2 and at 10 a.m. PT on Thursday, Jan. 4. The webinar series is scheduled to run at 10 a.m. PT every Tuesday and Thursday from there on out.&lt;/p&gt;
+
+&lt;p&gt;Have a question about how to get started using the AvaTax API? Want to know what SDKs are available and in what programming languages? Need some help calculating tax offline? Want some expert assistance customizing your transactions? Avalara’s team of engineers can answer all these questions and more – we are eager to help make the process of building accurate tax calculation solutions quick and easy for you.&lt;/p&gt;
+
+&lt;p&gt;So, be sure to register for the &lt;a href=&quot;https://event.on24.com/eventRegistration/EventLobbyServlet?target=reg20.jsp&amp;amp;referrer=https%3A%2F%2Fwcc.on24.com%2Fwebcast%2Fwebcasts&amp;amp;eventid=1574448&amp;amp;sessionid=1&amp;amp;key=52A06891BD560A19650B8C56EB7FE6A5&amp;amp;regTag=&amp;amp;sourcepage=register&quot; target=&quot;_blank&quot;&gt;Jan. 2&lt;/a&gt; and &lt;a href=&quot;https://event.on24.com/eventRegistration/EventLobbyServlet?target=reg20.jsp&amp;amp;referrer=https%3A%2F%2Fwcc.on24.com%2Fwebcast%2Fwebcasts&amp;amp;eventid=1574488&amp;amp;sessionid=1&amp;amp;key=89CDF7F50B9913E8BD11B6D69769975F&amp;amp;regTag=&amp;amp;sourcepage=register&quot; target=&quot;_blank&quot;&gt;Jan. 4&lt;/a&gt; Office Hours with AvaTax webinars. We’re looking forward to hearing your questions!&lt;/p&gt;
+
+&lt;p&gt;Thanks,&lt;/p&gt;
+
+&lt;p&gt;The Avalara Developer Team&lt;/p&gt;
+</description>
+        <pubDate>2017-12-21</pubDate>
+        <link>/blog/2017/12/21/office-hours-with-avatax/</link>
+        <guid isPermaLink="true">/blog/2017/12/21/office-hours-with-avatax/</guid>
+        
+        
+        <category>avatax</category>
+        
+      </item>
+    
+      <item>
+        <title>Developer Track at CRUSH 2018 Conference</title>
+        <description>&lt;h2&gt;Need to build fast, easy tax compliance solutions? Come to CRUSH DC 2018 and find out how!&lt;/h2&gt;
+
+&lt;p&gt;Are you a developer looking to build solutions that make tax compliance fast, easy and, most important of all, accurate? Are you already connected to Avalara’s AvaTax platform and looking to get the scoop on the latest features and capabilities it has to offer?&lt;/p&gt;
+
+&lt;p&gt;If so, then be sure to sign up for &lt;a href=&quot;http://www.avalaracrush.com/&quot;&gt;CRUSH DC 2018&lt;/a&gt;, Avalara’s annual conference for all things tax compliance. This year’s event, which will be held from May 9-11 in Washington, D.C., will feature a robust developer-focused track covering everything from the basics of calculating tax using AvaTax to building connectors for enterprise-level organizations.&lt;/p&gt;
+
+&lt;h3&gt;New &amp;amp; Improved Developer Track&lt;/h3&gt;
+
+&lt;p&gt;We received a ton of great feedback from the developer community in the wake of last year’s CRUSH, and, as a result, have nearly doubled the number of available sessions at this year’s event. The sessions will be interactive in format and led by Avalara’s top technical specialists and engineers, all of whom are experts in the features and functions of the AvaTax platform that make it possible for you to build robust tax compliance solutions.&lt;/p&gt;
+
+&lt;p&gt;Here is a breakdown of the sessions available to developers attending CRUSH DC:&lt;/p&gt;
+
+&lt;h4&gt;Thursday, May 10:&lt;/h4&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;&lt;strong&gt;9 a.m. to 10:15 a.m. – Calculating Tax with AvaTax:&lt;/strong&gt; Learn how AvaTax calculates tax, the reasons why tax can be zero, and about the lifecycle of a transaction from recording to filing. This session includes a tutorial on how to integrate AvaTax into an existing application.
+&lt;/li&gt;
+	&lt;li&gt;&lt;strong&gt;10:30 a.m. to 11:45 a.m. – Integrate CertCapture Exemption Management via REST:&lt;/strong&gt; Learn how to use the new exemption certificate functionality and customer features in the AvaTax API to earn the Document Management badge and certification.&lt;/li&gt;
+	&lt;li&gt;&lt;strong&gt;12:45 p.m. to 2 p.m. – Performance Tuning for AvaTax:&lt;/strong&gt; Learn all the various features available in the AvaTax API to improve performance for your software. Learn how to measure the performance of AvaTax and a variety of different API calls, as well as how your design choices affect your results.&lt;/li&gt;
+	&lt;li&gt;&lt;strong&gt;2:15 p.m. to 3:30 p.m. – Beyond Sales Tax: Calculating Multiple Tax Types:&lt;/strong&gt; Join us for an introduction to the various taxes now supported through Avalara APIs. Discuss the use of parameters, attributes, and other fields to enable the calculation of bottle tax, e-waste fees, recycling fees, and more.&lt;/li&gt;
+	&lt;li&gt;&lt;strong&gt;3:45 p.m. to 5 p.m. – Developing the Avalara Experience:&lt;/strong&gt; Bring the Avalara Experience into your application, reducing support cases and customer friction. Learn suggested practices for implementing AvaTax, including how to understand the process to provision AvaTax accounts, set account configuration options, and on-board customers using features in the REST API.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;Friday, May 11:&lt;/h4&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+  &lt;li&gt;&lt;strong&gt;10:30 a.m. to 11:45 a.m. – VAT via AvaTax REST APIs:&lt;/strong&gt; Learn the features and functions introduced into Avalara's technology stack to support Value Added Tax (VAT). Discuss the basics of VAT, with an EU focus, and how to create compliance automation solutions for VAT using Avalara APIs.
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;12:45 p.m. to 2 p.m. – Calculating Tax Offline:&lt;/strong&gt; Learn how to keep your tax calculations processing when your internet connection drops, and how to reconcile offline transactions later. This session will include the use of our Tax Content API as well as other available solutions.
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;2:15 p.m. to 3:30 p.m. – Enterprise Connector Development:&lt;/strong&gt; Learn how designing software for enterprise business is very different than designing for small desktop accounting systems. Learn how a connector developer can write the best possible connector for a large business or what new tax concepts you need to learn to build an effective connector for big business.
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;3:45 p.m. to 5 p.m. – Ask Me Anything – AvaTax API (Q&amp;amp;A):&lt;/strong&gt; Learn the history of Avalara's new AvaTax REST API and the choices behind our developer website. This session includes a 30-minute question and answer session with the developers and designers of the AvaTax API.
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Monthly Developer Webinars … More Coming in 2018&lt;/h3&gt;
+
+&lt;p&gt;If you can’t wait for CRUSH DC to connect with an Avalara engineer, then be sure to register for the &lt;a href=&quot;https://register.gotowebinar.com/register/2719809517923376642?elqTrackId=1e1e4653e9834d2cb78e0271c91cb947&amp;amp;elqaid=2376&amp;amp;elqat=2&quot;&gt;final developer webinar of 2017&lt;/a&gt; – an open Q&amp;amp;A with our top developers – scheduled for 11 a.m. PT on Wednesday, Dec. 20. These webinars are intended to help developers looking to do a deep dive on Avalara’s products and services, and, like the CRUSH DC sessions, are interactive in nature. We want to her your feedback on the AvaTax platform and help you succeed, so be sure to come with your questions.&lt;/p&gt;
+
+&lt;p&gt;Of course, we plan to continue the monthly developer webinar series in 2018. We’ll roll out more details on next year’s webinars soon via the &lt;a href=&quot;/blog&quot;&gt;Avalara Developer Blog&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/avadev&quot;&gt;Twitter&lt;/a&gt;, so stay tuned.&lt;/p&gt;
+
+&lt;p&gt;I can’t wait to see you all in Washington, D.C. in May.&lt;/p&gt;
+
+&lt;p&gt;– Mark Wilhelm, Director, Partner Launch, Avalara&lt;/p&gt;
+</description>
+        <pubDate>2017-12-06</pubDate>
+        <link>/blog/2017/12/06/CRUSH-DC-2018/</link>
+        <guid isPermaLink="true">/blog/2017/12/06/CRUSH-DC-2018/</guid>
+        
+        
+        <category>avatax</category>
+        
+      </item>
+    
+      <item>
+        <title>AvaTax API 17.12 Patch Notes</title>
+        <description>&lt;p&gt;This article is about the December 2017 monthly update to the AvaTax API.&lt;/p&gt;
+
+&lt;div class=&quot;mobile-table&quot;&gt;
+    &lt;table class=&quot;styled-table&quot;&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Environment&lt;/th&gt;
+            &lt;th&gt;URL&lt;/th&gt;
+            &lt;th&gt;Release Date&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Sandbox&lt;/td&gt;
+            &lt;td&gt;&lt;a href=&quot;https://sandbox-rest.avatax.com&quot;&gt;https://sandbox-rest.avatax.com&lt;/a&gt;&lt;/td&gt;
+            &lt;td&gt;2017-12-11&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Production&lt;/td&gt;
+            &lt;td&gt;&lt;a href=&quot;https://rest.avatax.com&quot;&gt;https://rest.avatax.com&lt;/a&gt;&lt;/td&gt;
+            &lt;td&gt;2017-12-14&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Performance Tuning&lt;/h3&gt;
+
+&lt;p&gt;During the months since the &lt;a href=&quot;/blog/2017/09/22/AvaTax-17-9-patch-notes&quot;&gt;17.9 Patch Notes&lt;/a&gt;, our team has been hard at work tuning the performance of AvaTax for the once-a-year sales events that happen in November.  Here’s a summary of the improvements that have been made since the September release:&lt;/p&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;Reduced the impact of calling the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/GetTransactionByCode/&quot;&gt;GetTransactionByCode API&lt;/a&gt; and &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/GetTransactionByCodeAndType/&quot;&gt;GetTransactionByTypeAndCode API&lt;/a&gt;.  This change improved performance for customers whose products used a mix of calls to these APIs alongside creating new transactions.&lt;/li&gt;
+	&lt;li&gt;Eliminated caching delays caused by updating user credentials or license keys rapidly before they had time to propagate through the AvaTax storage cluster.&lt;/li&gt;
+	&lt;li&gt;Enforced a limitation on the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/ListTransactionsByCompany/&quot;&gt;ListTransactionsByCompany API&lt;/a&gt; to avoid extremely long timeouts for customers with a large number of transactions.  By default, this API now limits you to fetching data within the current 30-day window.&lt;/li&gt;
+	&lt;li&gt;Better query optimization when fetching data from our data store, and better use of our three-tiered data caching strategy throughout the REST API.&lt;/li&gt;
+	&lt;li&gt;Improved performance for the free &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Free/TaxRatesByPostalCode/&quot;&gt;TaxRatesByPostalCode API&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These changes were released gradually during the October and November timeframe as our team prepared for Black Friday and Cyber Monday sales events.&lt;/p&gt;
+
+&lt;h3&gt;MultiDocument API Suite&lt;/h3&gt;
+
+&lt;p&gt;Are you building a marketplace website that provides the ability for a wide variety of vendors to list their wares?  Does your company make purchases for multiple business entities with a single transaction?  If so, you may be a candidate for Avalara’s newest API: the MultiDocument API Suite.&lt;/p&gt;
+
+&lt;p&gt;This collection of APIs makes it convenient to record a transaction for a variety of vendors in one place, and to automatically break up the transaction so that it can be reported on multiple separate tax returns, one per business entity.  We’ll update our documentation for this feature and share with you a variety of blog posts explaining how this API suite can help you create, track, adjust, and reconcile transactions in a multi-vendor marketplace.&lt;/p&gt;
+
+&lt;h3&gt;Support for Country and Region Naming&lt;/h3&gt;
+
+&lt;p&gt;As of the December release of AvaTax, all of our APIs now allow you to specify full length country names, abbreviations, and even some common misspellings of various countries.  We have subscribed to the International Standards Organization’s ISO3166 database, which provides us with official names and abbreviations of countries and region codes throughout the world and in many popular languages.&lt;/p&gt;
+
+&lt;p&gt;All of this data and localized names are now available to you through the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Definitions/ListCountries/&quot;&gt;ListCountries API&lt;/a&gt; and &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Definitions/ListRegions/&quot;&gt;ListRegions API&lt;/a&gt;.  Try out the API and see what you can find!&lt;/p&gt;
+
+&lt;p&gt;Now that you are able to use fully spelled out names of countries and regions in all AvaTax APIs, here are a few examples:&lt;/p&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;You can now use &lt;b&gt;UNITED STATES&lt;/b&gt; as well as &lt;b&gt;US&lt;/b&gt; when referring to the United States.&lt;/li&gt;
+	&lt;li&gt;You can now use &lt;b&gt;CALIFORNIA&lt;/b&gt; as well as &lt;b&gt;CA&lt;/b&gt; when referring to the west coast state.&lt;/li&gt;
+	&lt;li&gt;You can now use &lt;b&gt;ZURICH&lt;/b&gt; or &lt;b&gt;ZÜRICH&lt;/b&gt; as well as &lt;b&gt;ZH&lt;/b&gt; when referring to the region within Switzerland.  Character accents are optional, but supported.&lt;/li&gt;
+	&lt;li&gt;You can now use &lt;b&gt;GERMANY&lt;/b&gt; or &lt;b&gt;DEUTSCHLAND&lt;/b&gt; or &lt;b&gt;ALLEMAGNE&lt;/b&gt; as well as &lt;b&gt;DE&lt;/b&gt; to refer to the Republic of Germany.  The same country name is available in certain formally recognized linguistic variants.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Changes to CreateTransaction&lt;/h3&gt;
+
+&lt;p&gt;A variety of improvements and bugfixes have been made to the CreateTransaction API.&lt;/p&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;If you omit the field &lt;code&gt;date&lt;/code&gt; when calling the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/&quot;&gt;CreateTransaction API&lt;/a&gt;, you will now get a proper error message indicating that the field cannot be null or empty.&lt;/li&gt;
+	&lt;li&gt;For consistency, the field &lt;code&gt;customerUsageType&lt;/code&gt; is being replaced with &lt;code&gt;entityUseCode&lt;/code&gt;.  We have chosen to standardize on the naming of this field all throughout our API; so please expect to see the same field have the same name in all instances.&lt;/li&gt;
+	&lt;li&gt;Fixed a bug where transactions in Canada would occasionally see incorrect jurisdiction type ID values when using the transaction type &lt;code&gt;SalesOrder&lt;/code&gt;.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception when sending &lt;code&gt;referenceCode&lt;/code&gt; fields longer than 1,024 characters.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception when transmitting unusual values in the type field for tax overrides.&lt;/li&gt;
+	&lt;li&gt;Marked the &lt;code&gt;lines&lt;/code&gt; element as required, since a transaction cannot be created if there are no invoice lines on it.&lt;/li&gt;
+	&lt;li&gt;Improved documentation for the &lt;code&gt;isSellerImporterOfRecord&lt;/code&gt; and &lt;code&gt;taxIncluded&lt;/code&gt; fields.&lt;/li&gt;
+	&lt;li&gt;Added a new field, &lt;code&gt;totalDiscount&lt;/code&gt;, to the transaction model.  This field contains the sum of all discounts for each individual line in the overall transaction.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Other Improvements&lt;/h3&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;The &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/LockTransaction/&quot;&gt;LockTransaction API&lt;/a&gt; now gives an error message if you call it without returns enabled.&lt;/li&gt;
+	&lt;li&gt;The &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Addresses/ResolveAddress/&quot;&gt;ResolveAddress API&lt;/a&gt; will return an error message if you attempt to validate addresses in a country that is not supported by Avalara's address matching logic.&lt;/li&gt;
+	&lt;li&gt;Improved documentation and error messages for the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/ChangeTransactionCode/&quot;&gt;ChangeTransactionCode API&lt;/a&gt;.&lt;/li&gt;
+	&lt;li&gt;Removed the trace file from the filing confirmations download API.  Payment traces can now be downloaded through a separate API call.&lt;/li&gt;
+	&lt;li&gt;Improved the use of example objects in the API documentation and added tests to ensure that all models used in the API have a valid example object.&lt;/li&gt;
+	&lt;li&gt;Improved the error messages provided when a user attempts to change their security role without sufficient permissions.&lt;/li&gt;
+	&lt;li&gt;Improved data store operations on the tables related to the reporting API.&lt;/li&gt;
+	&lt;li&gt;Updated documentation for a variety of APIs&lt;/li&gt;
+	&lt;li&gt;Improved model validation for complex nested models.  You should now see better validation errors for all sorts of data problems in the API.&lt;/li&gt;
+	&lt;li&gt;Improved caching for code that checks your returns filing configuration.&lt;/li&gt;
+	&lt;li&gt;Improved documentation for &lt;code&gt;nexusTypeId&lt;/code&gt; in the Nexus API suite.&lt;/li&gt;
+	&lt;li&gt;The CreateUser API has been moved to the Users API suite, and its documentation has been updated to indicate that it is available to use to generate users.&lt;/li&gt;
+	&lt;li&gt;New API available for determining the status of a tax filing quickly by its filing calendar ID.&lt;/li&gt;
+	&lt;li&gt;Updated the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/AddLines/&quot;&gt;AddLines API&lt;/a&gt; to work with &lt;code&gt;$include&lt;/code&gt; options.&lt;/li&gt;
+	&lt;li&gt;Marked the &lt;code&gt;verifyTransactionDate&lt;/code&gt; parameter as optional in the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/VerifyTransaction/&quot;&gt;VerifyTransaction API&lt;/a&gt;.&lt;/li&gt;
+	&lt;li&gt;Improved documentation for the &lt;code&gt;X-Avalara-Client&lt;/code&gt; parameter for all APIs.&lt;/li&gt;
+	&lt;li&gt;Corrected an issue that incorrectly marked &lt;code&gt;registrationId&lt;/code&gt; field as required for filing requests.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Bugfixes&lt;/h3&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+	&lt;li&gt;Fixed a bug in the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/TaxContent/BuildTaxContentFile/&quot;&gt;BuildTaxContentFile API&lt;/a&gt; that caused certain sales tax holidays to appear incorrectly.  Another problem caused jurisdictions with commas in their names to parse incorrectly.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception when you provided a date value earlier than the year 1900.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception when saving negative adjustments to tax filings.&lt;/li&gt;
+	&lt;li&gt;Fixed a variety of unhandled exceptions with complex &lt;code&gt;?$filter=&lt;/code&gt; query string parameters.  One error was only triggered if you specified a field name but no operation; another error occurred if you specified multiple clauses within an API call but forgot a conjunction between clauses.  Other errors could occur if you specified certain criteria that were not supported on specific data models.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception in the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/RefundTransaction/&quot;&gt;RefundTransaction API&lt;/a&gt; that occurred when certain fields were left null or omitted.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception that occurred if you called the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Locations/CreateLocations/&quot;&gt;CreateLocations API&lt;/a&gt;a when one of the &lt;code&gt;settings&lt;/code&gt; elements had a name with an inappropriate length.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception that occurred if you attempted to fetch return filings using undefined or empty values, or if you attempted to fetch a specific tax filing with an invalid ID number.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception in the configuration settings for communications tax&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception when fetching reports that do not exist.&lt;/li&gt;
+	&lt;li&gt;Fixed a problem with the filing confirmation API that would prevent downloading of some Streamlined Sales Tax returns.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception that could occur when adding lines to a transaction that was created with older versions of the AvaTax software.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception that could occur if you transmit a null post body to the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/TaxCodes/CreateTaxCodes/&quot;&gt;CreateTaxCodes API&lt;/a&gt;, or if you were to send in a null or invalid company reference.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception in the TaxContent API suite that occurred if you attempted to build tax content files for an invalid location code.&lt;/li&gt;
+	&lt;li&gt;Fixed an unhandled exception on the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Onboarding/RequestNewAccount/&quot;&gt;RequestNewAccount API&lt;/a&gt; that occurred if you omitted the postal code or accidentally sent data too long for the field.&lt;/li&gt;
+	&lt;li&gt;Fixed an issue that caused incorrect tax authorities to be listed in some nexus queries.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;– Ted Spence, Director, AvaTax Core Engine&lt;/p&gt;
+</description>
+        <pubDate>2017-11-27</pubDate>
+        <link>/blog/2017/11/27/AvaTax-17-12-patch-notes/</link>
+        <guid isPermaLink="true">/blog/2017/11/27/AvaTax-17-12-patch-notes/</guid>
+        
+        
+        <category>avatax</category>
+        
+        <category>patch notes</category>
+        
+      </item>
+    
+      <item>
+        <title>Renaming Transactions</title>
+        <description>&lt;center&gt;&lt;img src=&quot;/images/renaming-transaction.jpg&quot; height=&quot;300&quot; width=&quot;75%&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;You’re building your integration using the AvaTax REST API.  The way your application works; you only have access to a temporary invoice number and at the end of all the processing your system assigns a permanent invoice number.  Given this; how can you keep the final values assigned by your application in sync with AvaTax?&lt;/p&gt;
+
+&lt;h3&gt;Renaming a Transaction&lt;/h3&gt;
+&lt;p&gt;Let’s review an example…First; we call &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/&quot;&gt;CreateTransaction&lt;/a&gt; and we can let AvaTax assign a unique “code” for us which we will capture and remember from the AvaTax response.  Notice we also set the “commit” flag to “false” in this request because once we commit the document, we will not be able to change the transaction code.&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;companyCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;DEFAULT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SalesInvoice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;commit&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;false&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TOI&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2017-10-09&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;lines&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Line 1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;quantity&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;amount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PC040100&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Baseball Cap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;addresses&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipFrom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2790 NE Strand Rd&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Bremerton&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;WA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;98311&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipTo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;26772 Calle Maria&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Capistrano Beach&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;92624&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Next; using &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/ChangeTransactionCode/&quot;&gt;ChangeTransactionCode&lt;/a&gt;, we will match what our application has assigned to the record.&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;newCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Invoice-3025&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;   
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we can easily cross-reference posted transactions in our Application with recorded transactions in AvaTax.&lt;/p&gt;
+
+&lt;h3&gt;Handling Errors&lt;/h3&gt;
+&lt;p&gt;There are a few types of errors you might get back when calling the ChangeTransactionCode API:&lt;/p&gt;
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;Did you remember to put the correct original code in the request?  If not, you will get a EnitityNotFoundError.&lt;/li&gt;
+    &lt;li&gt;Is your transaction committed in AvaTax? If so, you will get a DocStatusError.&lt;/li&gt;
+    &lt;li&gt;If you do not provide a value for the newCode, you will get a ValueRequiredError.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Remember to use the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CommitTransaction/&quot;&gt;CommitTransaction API&lt;/a&gt; to finalize the renamed transaction in AvaTax. Also; if the transaction your trying to change is “locked” you will not be able to change the transaction code.&lt;/p&gt;
+
+&lt;p&gt;-Mark Withers Partner Launch Team&lt;/p&gt;
+</description>
+        <pubDate>2017-11-14</pubDate>
+        <link>/blog/2017/11/14/renaming-transactions/</link>
+        <guid isPermaLink="true">/blog/2017/11/14/renaming-transactions/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Calculating TaxIncluded</title>
+        <description>&lt;center&gt;&lt;img src=&quot;/images/calculating-tax-included.jpg&quot; height=&quot;300&quot; width=&quot;75%&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;It can be a huge bother to make a purchase with cash, and wind up with a pocketful of unwanted pennies due to sales tax.  In most cases, sales taxes require you to charge unusual amounts, and those amounts change whenever tax rates are adjusted.  For today’s article, let’s discuss a feature of AvaTax that allows you to simplify the dollar value charged to your customers.&lt;/p&gt;
+
+&lt;h3&gt;Applications of TaxIncluded&lt;/h3&gt;
+
+&lt;p&gt;The TaxIncluded parameter tells AvaTax to use your product’s price as a target for the total sale.  Both the tax and amount will be adjusted to correctly match the target price, factoring in the exemption status and the local tax rate.&lt;/p&gt;
+
+&lt;p&gt;When you sell a product for a price of $100, tax is calculated on the amount and added to the total sale price.  The local tax rate in Irvine, California totals 7.75% for our test company, so with tax you’ll pay $107.75; and the store selling you the product will remit $7.750 to the tax authority on their next sales tax filing.  The end result is that you get your product, the store gets $100, and the tax authority gets $7.75.&lt;/p&gt;
+
+&lt;p&gt;Some companies choose to simplify their sales by charging a flat $100 rate - but they’ll still have to calculate sales tax on their next filing.  They will still remit $7.75 to the tax authority, leaving them with revenue of $92.25.&lt;/p&gt;
+
+&lt;p&gt;Now, let’s introduce the TaxIncluded parameter.  When you set TaxIncluded to true, AvaTax will perform slightly different math.  Instead of calculating the tax on top of the purchase amount, the tax is calculated to ensure that the final amount equals $100 directly.  This chart shows how the tax is compiled for each option:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/calculating-taax-included.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The end result is that you still calculate the correct tax rate, but the store knows the revenue amount when the sale is made, with no month-end finagling. The store keeps $92.81, and remits $7.19 of tax - which reflects the correct tax rate of 7.75%.&lt;/p&gt;
+
+&lt;h3&gt;Developing with TaxIncluded&lt;/h3&gt;
+&lt;p&gt;The TaxIncluded parameter appears on the line element in your CreateTransaction API call.  This means that you can sell a mixture of TaxIncluded and non-TaxIncluded parameters in a single transaction.  Here’s an API call that demonstrates the example above:&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;lines&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;amount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxIncluded&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SalesInvoice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;companyCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;DEFAULT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2017-10-02&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ABC&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;addresses&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;singleLocation&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2000 Main Street&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Irvine&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;92614&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The result ensures that the total price paid matches the requested amount exactly, and that the tax rate produces the correct tax amount.  Most importantly, this calculation will remain correct for any local tax rate - and you’ll have happy customers without a lot of unwanted change in their pockets!&lt;/p&gt;
+</description>
+        <pubDate>2017-11-08</pubDate>
+        <link>/blog/2017/11/08/calculating-taxIncluded/</link>
+        <guid isPermaLink="true">/blog/2017/11/08/calculating-taxIncluded/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Adjusting Transactions</title>
+        <description>&lt;center&gt;&lt;img src=&quot;/images/adjusting3.jpg&quot; height=&quot;300&quot; width=&quot;75%&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Now that you’re using AvaTax, your software creates transactions with ease.  What happens when a customer reports that they want to make a change?  Most accounting systems allow you to adjust invoices or modify transactions in some fashion.  Let’s review how AvaTax provides support for these scenarios.&lt;/p&gt;
+
+&lt;h3&gt;Refresher&lt;/h3&gt;
+&lt;p&gt;For previously recorded transactions with a status of committed in AvaTax; the service identifies the transaction in AvaTax is committed and does not permit the transaction to be overwritten.  If your transaction is committed but not locked, you can call &lt;a href=&quot;&quot;&gt;VoidTransaction&lt;/a&gt; - that means you caught it before it was reported on a tax return. The transaction will be canceled and you can create a new one with the corrected information.&lt;/p&gt;
+
+&lt;p&gt;However, if your transaction was locked and reported on a return, we can still help you. If you use Avalara’s Managed Returns service, we can provide help amending your returns. An amended return allows you to notify the state and correct any discrepancies. Reach out to your account manager today and we’ll be happy to help you with any tax reporting challenges!&lt;/p&gt;
+
+&lt;h3&gt;Isn't there another way?&lt;/h3&gt;
+&lt;p&gt;So after reading the refresher above; you may still ask, isn’t there another way I can still Adjust a previously recorded and committed transaction?  The short answer is yes, however, there are some key issues you need to be aware of.  First, the refresher section above outlines the recommended approach for the best audit trail and accounting visibility related to changing a recorded and committed invoice in a financial system.  Second, many Avalara customers use Avalara’s filing service or will plan to use in the future; and for anyone using this service, after the 10th of each month, the previous month’s transactions are marked “locked”.  Locked transactions cannot be Adjusted using the API.&lt;/p&gt;
+
+&lt;h3&gt;Common User Story for needing to Adjust a Transaction&lt;/h3&gt;
+&lt;p&gt;I have processed my daily invoice run from my financial / order management system, printed my invoices and am reviewing the invoices.  I spot that one of the invoices has an item which we no longer stock and I will not be able to fulfill; and on another invoice, the customer had called me after the invoice run and wants to change the order quantity.  My application has in the past always let me edit an invoice before I send it to my customer.  This has the benefit of keeping my invoice numbers sequential and keep the customer’s notification email invoice number in sync with what I have communicated to my customer.  I want this same behavior when I am using AvaTax.&lt;/p&gt;
+
+&lt;h3&gt;Adjusting a Transaction&lt;/h3&gt;
+&lt;p&gt;Using the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/AdjustTransaction/&quot;&gt;AdjustTransction&lt;/a&gt; method; AvaTax will create a revised document using the same “code”, which means from an audit trail perspective; AvaTax keeps track of all previously recorded transactions with the same code.  The last Adjusted transaction will be marked with a “committed” status, previously committed transactions will be marked “adjusted”.  Let’s review an example:&lt;/p&gt;
+
+&lt;p&gt;First, we will call &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/&quot;&gt;CreateTransaction&lt;/a&gt;, for a quantity of 10 with an extended price of 1000)&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;code&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;INV1001&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;companyCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;DEFAULT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SalesInvoice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;commit&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TOI&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2017-10-09&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;lines&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Line 1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;quantity&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;amount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PC040100&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Baseball Cap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;addresses&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipFrom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2790 NE Strand Rd&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Bremerton&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;WA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;98311&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipTo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;26772 Calle Maria&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Capistrano Beach&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;92624&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Next, we’ll call &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/AdjustTransaction/&quot;&gt;AdjustTransaction&lt;/a&gt; to change the invoice from a quantity of 10 to 9 and an extended price of 1000 to 900:&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;adjustmentReason&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Other&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;adjustmentDescription&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Quantity change&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;newTransaction&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;code&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;INV1001&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;companyCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;DEFAULT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;SalesInvoice&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;commit&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;customerCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;TOI&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2017-10-09&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;lines&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;number&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Line 1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;quantity&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;amount&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;900&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;taxCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;PC040100&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Baseball Cap&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;addresses&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipFrom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2790 NE Strand Rd&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Bremerton&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;WA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;98311&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;ShipTo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;line1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;26772 Calle Maria&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;city&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Capistrano Beach&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;region&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;CA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;country&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;US&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postalCode&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;92624&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You’ll now see that the transaction contains the updated amounts.  Your resulting transaction will show an adjusted amount of $900 and quantity of 9.&lt;/p&gt;
+
+&lt;h3&gt;Handling Errors&lt;/h3&gt;
+&lt;p&gt;There are a few types of errors to look for when calling the Adjust API:&lt;/p&gt;
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;Did you remember to put the updated transaction request in the NewTransaction element?  If not, you will get the error &lt;code&gt;ValueRequiredError&lt;/code&gt;.&lt;/li&gt;
+    &lt;li&gt;The adjustment reason field is required; if you omit it, you will get an error of type GetTaxError indicating that the reason field must not be empty.&lt;/li&gt;
+    &lt;li&gt;If you had been using Avalara's Managed Returns Service, and the original transaction had been filed on a tax return, you would have received an error indicating that the document is locked and cannot be adjusted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;End result: Your transaction is revised and updated!&lt;/p&gt;
+
+&lt;h3&gt;Another Alternative&lt;/h3&gt;
+&lt;p&gt;If you expect to modify transactions regularly, you may choose to use the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/&quot;&gt;CreateOrAdjustTransaction&lt;/a&gt; API.  This method follows a slightly different bit of logic:&lt;/p&gt;
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;When you provide your transaction to the API, it checks to see if that transaction already exists.&lt;/li&gt;
+    &lt;li&gt;If the transaction already exists, it calls AdjustTransaction.&lt;/li&gt;
+    &lt;li&gt;If the transaction does not exist, it calls CreateTransaction.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Using &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/&quot;&gt;CreateOrAdjustTransaction&lt;/a&gt; allows you to call the API for a specified document code without checking in advance if the transaction has yet been recorded in AvaTax.  This makes it a great option to sync up your accounting system or sales pipeline with your tax data.&lt;/p&gt;
+
+&lt;p&gt;-Mark Withers Partner Launch Team&lt;/p&gt;
+</description>
+        <pubDate>2017-10-10</pubDate>
+        <link>/blog/2017/10/10/adjusting-transactions/</link>
+        <guid isPermaLink="true">/blog/2017/10/10/adjusting-transactions/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>AvaTax Developer Guide</title>
+        <description>&lt;p&gt;If including tax calculation and remittance capabilities into your application has been daunting, tiresome, and therefore easy to put on the back burner, we understand. Your users need these capabilities to keep the tax auditors at bay, but you don’t have time to wade through pages of documentation to try to understand the complexities of sales and use tax. We want to help you deliver that huge operational efficiency and tax protection to your users quickly and easily.&lt;/p&gt;
+
+&lt;p&gt;Introducing the &lt;a href=&quot;/avatax/dev-guide/&quot;&gt;AvaTax Developer Guide&lt;/a&gt;.  We’ve condensed and simplified our documentation into a fun-to-read chapter format to help you successfully build your integration to AvaTax.&lt;/p&gt;
+
+&lt;h3&gt;Quick integration&lt;/h3&gt;
+&lt;p&gt;In each chapter, we cover everything from how to obtain your &lt;a href=&quot;/avatax/signup/&quot;&gt;free sandbox account&lt;/a&gt; to why your users should care about &lt;a href=&quot;/avatax/dev-guide/consumer-use-tax/&quot;&gt;consumer use tax&lt;/a&gt;. It’s easy to navigate around the different areas of interest and return to them as needed.&lt;/p&gt;
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;Learn how Avalara uses logic around specific &lt;a href=&quot;/avatax/dev-guide/product-taxability/&quot;&gt;product taxability&lt;/a&gt; to deliver the most accurate tax rate for that product. &lt;/li&gt;
+    &lt;li&gt;Should your users report &lt;a href=&quot;/avatax/dev-guide/shipping-and-handling/&quot;&gt;shipping and handling charges&lt;/a&gt;?&lt;/li&gt;
+    &lt;li&gt;How can you ensure that your application can still calculate tax when you've lost connection to the internet? We have the best practices for &lt;a href=&quot;/avatax/dev-guide/calculating-tax-offline/&quot;&gt;calculating tax offline&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The guide can direct you to the correct &lt;a href=&quot;/api-reference/avatax/rest/v2/&quot;&gt;API reference&lt;/a&gt; page for every function, so you can work at your own pace. Each chapter also includes test cases you can use to check if your software is working correctly.&lt;/p&gt;
+
+&lt;h3&gt;Connector developers&lt;/h3&gt;
+
+&lt;p&gt;For developers working on integrating AvaTax into accounting systems or web storefronts, we have a list of &lt;a href=&quot;/certification/avatax/use-tax/&quot;&gt;certification requirements&lt;/a&gt; you should consider if you wish to apply for Avalara Certified Connector status. Getting certified is a great way to learn the theory of tax and how it applies to your software.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;/avatax/dev-guide/getting-started-with-avatax/&quot;&gt;AvaTax Developer Guide&lt;/a&gt; teaches you everything you need to know to create a robust integration for all types of customers. Quickstart chapters will help you get started fast, customization chapters will help you map your accounting system’s features to AvaTax, and the advanced chapters will help you ensure compatibility with large enterprises when they begin using your software. And, if you’ve ever wondered why some large enterprises use &lt;a href=&quot;/avatax/dev-guide/locations/&quot;&gt;location-based reporting&lt;/a&gt;, we’ve got you covered.&lt;/p&gt;
+
+&lt;p&gt;Please come and see what’s new. As always, we welcome your feedback on our new format and how it can be improved. Relax, we’ll handle the tax.&lt;/p&gt;
+
+</description>
+        <pubDate>2017-09-29</pubDate>
+        <link>/blog/2017/09/29/Avatax-Developer-Guide/</link>
+        <guid isPermaLink="true">/blog/2017/09/29/Avatax-Developer-Guide/</guid>
+        
+        
+        <category>avatax</category>
+        
+      </item>
+    
+      <item>
+        <title>AvaTax API 17.9 Patch Notes</title>
+        <description>&lt;p&gt;This article is about the September 2017 monthly update to the AvaTax API.&lt;/p&gt;
+
+&lt;div class=&quot;mobile-table&quot;&gt;
+    &lt;table class=&quot;styled-table&quot;&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Environment&lt;/th&gt;
+            &lt;th&gt;URL&lt;/th&gt;
+            &lt;th&gt;Release Date&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Sandbox&lt;/td&gt;
+            &lt;td&gt;&lt;a href=&quot;https://sandbox-rest.avatax.com&quot;&gt;https://sandbox-rest.avatax.com&lt;/a&gt;&lt;/td&gt;
+            &lt;td&gt;2017-09-26&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Production&lt;/td&gt;
+            &lt;td&gt;&lt;a href=&quot;https://rest.avatax.com&quot;&gt;https://rest.avatax.com&lt;/a&gt;&lt;/td&gt;
+            &lt;td&gt;2017-09-28&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;License Key Authentication Update&lt;/h3&gt;
+
+&lt;p&gt;Avalara customers are requested to read the Avalara terms and conditions by visiting the &lt;a href=&quot;https://admin.avalara.com&quot;&gt;AvaTax website for production&lt;/a&gt; or the &lt;a href=&quot;https://sandbox.admin.avalara.com&quot;&gt;AvaTax website for Sandbox&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Accounts/AccountResetLicenseKey/&quot;&gt;AccountResetLicenseKey API&lt;/a&gt; will now return an &lt;code class=&quot;highlighter-rouge&quot;&gt;AccountInNewStatusException&lt;/code&gt; error if your account has not yet been activated by reading terms and conditions on the AvaTax website.  Please note that resetting your license key will invalidate all previous license keys for your account.  AvaTax will send an email to all active account administrators for your account notifying you that the license key was reset.&lt;/p&gt;
+
+&lt;p&gt;Activating your account using the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Accounts/ActivateAccount/&quot;&gt;ActivateAccount API&lt;/a&gt; will no longer automatically generate a license key.&lt;/p&gt;
+
+&lt;h3&gt;Asynchronous Reporting API&lt;/h3&gt;
+
+&lt;p&gt;In order to ensure reliable performance of report generation using the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Reports/&quot;&gt;Reporting API in REST&lt;/a&gt;, we have enforced a rate limit on report requests so that concurrency issues do not delay or block report generation.&lt;/p&gt;
+
+&lt;p&gt;The Reporting API has been split up as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Request a report using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Initiate&lt;/code&gt; API.  You will receive back a report ID number.&lt;/li&gt;
+  &lt;li&gt;Check status on a report by requesting it via the &lt;code class=&quot;highlighter-rouge&quot;&gt;GetReport&lt;/code&gt; API, and pass in the report ID number you received from the &lt;code class=&quot;highlighter-rouge&quot;&gt;Initiate&lt;/code&gt; API call.  When a report is ready for download, the status will show &lt;code class=&quot;highlighter-rouge&quot;&gt;Completed&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Download the actual report file using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Download&lt;/code&gt; API.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The synchronous reporting API has been deprecated.&lt;/p&gt;
+
+&lt;h3&gt;Improvements to the CreateTransaction API&lt;/h3&gt;
+
+&lt;p&gt;A variety of improvements were made to the &lt;a href=&quot;/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/&quot;&gt;CreateTransaction API&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;Improved performance and reduced data store usage provide more consistent performance, even during busy hours&lt;/li&gt;
+    &lt;li&gt;Updated documentation helps to explain how it relates to [CreateOrAdjustTransaction](/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/) so users can more freely decide between the two APIs.&lt;/li&gt;
+    &lt;li&gt;The field Description will now be returned correctly when getting estimates using the SalesOrder transaction type.&lt;/li&gt;
+    &lt;li&gt;Customized error message for when you use only destination or origin address types with a transaction.&lt;/li&gt;
+    &lt;li&gt;The SalesOrder transaction type now supports $include=SummaryOnly.&lt;/li&gt;
+    &lt;li&gt;The SalesOrder transaction type now correctly obeys the TaxDebugLevel parameter.  In version 17.8.1, it returned diagnostic-level detail for all sales orders regardless of the setting of the TaxDebugLevel parameter.&lt;/li&gt;
+    &lt;li&gt;Fixed an unhandled exception that occurred rarely when modifying an existing transaction.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Other Bugfixes and Improvements&lt;/h3&gt;
+
+&lt;ul class=&quot;normal&quot;&gt;
+    &lt;li&gt;Improved error messages for CreateUser API; users can be set to NoAccess privilege levels.&lt;/li&gt;
+    &lt;li&gt;Additional logging and metrics for users seeing unhandled exceptions.&lt;/li&gt;
+    &lt;li&gt;Improved documentation for a variety of APIs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;– Ted Spence, Director, AvaTax Core Engine&lt;/p&gt;
+</description>
+        <pubDate>2017-09-22</pubDate>
+        <link>/blog/2017/09/22/AvaTax-17-9-patch-notes/</link>
+        <guid isPermaLink="true">/blog/2017/09/22/AvaTax-17-9-patch-notes/</guid>
+        
+        
+        <category>avatax</category>
+        
+        <category>patch notes</category>
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="robots" content="index,follow" /> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adjusting Transactions | Avalara Developer</title>
+
+    
+    <meta name="description" content="API solutions for end-to-end tax compliance">
+
+    
+    <meta property="og:title" content="Adjusting Transactions | Avalara Developer" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Avalara Developer Network" />
+    <meta property="og:description" content="API solutions for end-to-end tax compliance"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/developer-dot/public/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/developer-dot/public/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/developer-dot/public/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/developer-dot/public/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/developer-dot/public/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/developer-dot/public/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/developer-dot/public/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/developer-dot/public/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/developer-dot/public/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/developer-dot/public/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/developer-dot/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/developer-dot/public/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/developer-dot/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/developer-dot/public/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff ">
+    <meta name="msapplication-TileImage" content="/developer-dot/public/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff ">
+
+    <link rel="stylesheet" href="/developer-dot/public/css/style.css"> 
+    <!-- Adobe Dynamic Tab Manager Tag Manager -->
+    <script src="https://assets.adobedtm.com/bc10a2a9cf337c664f8f74e778a1987125aea184/satelliteLib-0387aefee1ddb8b2a9db7e4165c8d84dc0de8621.js"></script>
+    <!-- End Adobe Dynamic Tab Manager Tag Manager -->
+</head>
+ 
+
+<body id="top" data-product=blog>
+    <header>
+        <div class="pageTitle">
+            <a href="/developer-dot/">
+                <img src="/developer-dot/public/images/Avalara_logo.svg" alt="Avalara Developer Network">
+                <span>Developer</span>
+            </a>
+            <span class="slash">/&nbsp;</span><a href="/developer-dot/blog">blog</a>
+        </div>
+        <nav class="navbar navbar-default navbar-static">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav  ">
+                    <li class="apis visible-xs-block"><a href="/developer-dot/avalara-apis"><span class="text-uppercase">API</span>s</a></li>
+                    <li class="visible-xs-block"><a href="/developer-dot/avatax/dev-guide/"><span class="text-uppercase">AvaTax Developer Guide</span></a></li>
+                    <li class="apis dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">API</span>s <i class="caret"></i></a>
+                        <div class="dropdown-menu dropdown-menu-large">
+                            <div class="row">
+                                <div class="col-md-12"><a href="/developer-dot/avalara-apis">APIs overview</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Tax calculation</h2>
+                                    
+                                    <h4>Avalara AvaTax</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/avatax">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/avatax/dev-guide">Developer Guide</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/avatax/rest/v2">API reference</a></li>
+                                        
+                                        <br/>
+                                        <li><a href="/developer-dot/avatax/use-cases">Use Cases</a></li>
+                                        <li><a href="/developer-dot/avatax/get-started">Start your AvaTax free trial now!</a></li>
+                                    </ul>
+                                     
+                                    <h4>Avalara Communications</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/communications">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/communications/afc-rest">API reference</a></li>
+                                        
+                                    </ul>
+                                     
+                                    <h4>Avalara Excise</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/excise">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/excise/5_18_0">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2>Compliance document management</h2>
+                                    
+                                    <h4>Avalara CertCapture</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/certcapture">Overview</a></li>
+                                        
+                                        <li><a href="http://docs.certcapture6xrest.apiary.io/">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                    <h2>Returns &amp; filing</h2>
+                                     
+                                    <h4>Avalara TrustFile</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/trustfile">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/trustfile/api">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sdk dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">SDK</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li ><a href="/developer-dot/avatax/get-started">Get Started with AvaTax</a></li>
+                            <br/>
+                            <li><a href="/developer-dot/sdk/">The AvaTax SDK</a></li>
+                            <li><a href="/developer-dot/sdk/soap">SOAP SDK</a></li>
+                            <br/>
+                            <li><a target="_blank" href="https://www.nuget.org/packages/Avalara.AvaTax/">Install C# SDK via NuGet</a></li>
+                            <li><a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">Install JRE SDK via Maven</a></li>
+                            <li><a target="_blank" href="https://packagist.org/packages/avalara/avataxclient">Install PHP SDK via Composer</a></li>
+                            <li><a target="_blank" href="https://rubygems.org/gems/avatax">Install Ruby SDK via RubyGems</a></li>
+                            <li><a target="_blank" href="https://www.npmjs.com/package/avatax">Install JavaScript SDK via NPMJS</a></li>
+                        </ul>
+                    </li>
+                    <li class="tests"><a href="/developer-dot/tests/testing-your-integration/"><span class="text-uppercase">Tests</span></a></li>
+                    <!-- removing until the link to the Self-Test is fugured out -->
+                    <!--
+                    <li class="tests dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Tests</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/tests/self-test">Avalara Self-Test Tool</a></li>
+                            <li><a href="/developer-dot/tests/testing-your-integration/">Avalara Test Cases</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="certification dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggel" data-toggle="dropdown"><span class="text-uppercase">Become Certified</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/certification/">Overview</a></li>
+                            <li><a href="/developer-dot/certification/avatax/">Avalara AvaTax</a></li>
+                            <li><a href="/developer-dot/certification/communications-certification/">Avalara Communications</a></li>
+                            <li><a href="/developer-dot/certification/excise/">Avalara Excise</a></li>
+                            <li><a href="/developer-dot/certification/certcapture/">Avalara CertCapture</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Resources</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                          <li><a href="/developer-dot/resources/support">Developer Support Options</a></li>
+                          <li><a href="/developer-dot/blog">Developer Blog</a></li>
+                          <li><a href="/developer-dot/resources/webinars">Webinars</a></li>
+                          <!--<li><a href="/developer-dot/resources/preferred-developers">Preferred developers</a></li>-->
+                          <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
+                          <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/blog"><span class="text-uppercase">Developer Blog</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/developer-dot/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
+                    <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
+                </ul>
+
+
+                <a href="/developer-dot/avatax/signup/" class="btn btn-primary btn-signup">Free Trial</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid blog">
+        
+        
+        <section class="row padding-sides">
+            <main class="col-md-12">
+<div class="breadcrumbs blog">
+    <div class="col-md-12">
+        <ul class="pipe">
+            <li class="text-uppercase">Resources</li>
+            <li class="text-uppercase"><a href="/developer-dot/blog">Developer Blog</a></li>
+            
+            <li class="text-uppercase">Adjusting Transactions</li>
+            
+        </ul>
+    </div>
+</div>
+<br />
+
+
+
+<div class="half">
+    <h1>Adjusting Transactions</h1>
+    <p class="byline">By Mark Withers | October 10, 2017</p>
+    <p class="blog-content"><center><img src="/developer-dot/images/adjusting3.jpg" height="300" width="75%" /></center>
+
+<p>Now that you’re using AvaTax, your software creates transactions with ease.  What happens when a customer reports that they want to make a change?  Most accounting systems allow you to adjust invoices or modify transactions in some fashion.  Let’s review how AvaTax provides support for these scenarios.</p>
+
+<h3>Refresher</h3>
+<p>For previously recorded transactions with a status of committed in AvaTax; the service identifies the transaction in AvaTax is committed and does not permit the transaction to be overwritten.  If your transaction is committed but not locked, you can call <a href="">VoidTransaction</a> - that means you caught it before it was reported on a tax return. The transaction will be canceled and you can create a new one with the corrected information.</p>
+
+<p>However, if your transaction was locked and reported on a return, we can still help you. If you use Avalara’s Managed Returns service, we can provide help amending your returns. An amended return allows you to notify the state and correct any discrepancies. Reach out to your account manager today and we’ll be happy to help you with any tax reporting challenges!</p>
+
+<h3>Isn't there another way?</h3>
+<p>So after reading the refresher above; you may still ask, isn’t there another way I can still Adjust a previously recorded and committed transaction?  The short answer is yes, however, there are some key issues you need to be aware of.  First, the refresher section above outlines the recommended approach for the best audit trail and accounting visibility related to changing a recorded and committed invoice in a financial system.  Second, many Avalara customers use Avalara’s filing service or will plan to use in the future; and for anyone using this service, after the 10th of each month, the previous month’s transactions are marked “locked”.  Locked transactions cannot be Adjusted using the API.</p>
+
+<h3>Common User Story for needing to Adjust a Transaction</h3>
+<p>I have processed my daily invoice run from my financial / order management system, printed my invoices and am reviewing the invoices.  I spot that one of the invoices has an item which we no longer stock and I will not be able to fulfill; and on another invoice, the customer had called me after the invoice run and wants to change the order quantity.  My application has in the past always let me edit an invoice before I send it to my customer.  This has the benefit of keeping my invoice numbers sequential and keep the customer’s notification email invoice number in sync with what I have communicated to my customer.  I want this same behavior when I am using AvaTax.</p>
+
+<h3>Adjusting a Transaction</h3>
+<p>Using the <a href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/AdjustTransaction/">AdjustTransction</a> method; AvaTax will create a revised document using the same “code”, which means from an audit trail perspective; AvaTax keeps track of all previously recorded transactions with the same code.  The last Adjusted transaction will be marked with a “committed” status, previously committed transactions will be marked “adjusted”.  Let’s review an example:</p>
+
+<p>First, we will call <a href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/">CreateTransaction</a>, for a quantity of 10 with an extended price of 1000)</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV1001"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"companyCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SalesInvoice"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"commit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"customerCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TOI"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-09"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Line 1"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"taxCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PC040100"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Baseball Cap"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"ShipFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2790 NE Strand Rd"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bremerton"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98311"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"ShipTo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26772 Calle Maria"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Capistrano Beach"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"92624"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Next, we’ll call <a href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/AdjustTransaction/">AdjustTransaction</a> to change the invoice from a quantity of 10 to 9 and an extended price of 1000 to 900:</p>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"adjustmentReason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"adjustmentDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Quantity change"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"newTransaction"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INV1001"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"companyCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SalesInvoice"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"commit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"customerCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TOI"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-10-09"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"lines"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Line 1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"taxCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PC040100"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Baseball Cap"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"ShipFrom"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2790 NE Strand Rd"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bremerton"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98311"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"ShipTo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26772 Calle Maria"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Capistrano Beach"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"92624"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+<p>You’ll now see that the transaction contains the updated amounts.  Your resulting transaction will show an adjusted amount of $900 and quantity of 9.</p>
+
+<h3>Handling Errors</h3>
+<p>There are a few types of errors to look for when calling the Adjust API:</p>
+<ul class="normal">
+    <li>Did you remember to put the updated transaction request in the NewTransaction element?  If not, you will get the error <code>ValueRequiredError</code>.</li>
+    <li>The adjustment reason field is required; if you omit it, you will get an error of type GetTaxError indicating that the reason field must not be empty.</li>
+    <li>If you had been using Avalara's Managed Returns Service, and the original transaction had been filed on a tax return, you would have received an error indicating that the document is locked and cannot be adjusted.</li>
+</ul>
+<p>End result: Your transaction is revised and updated!</p>
+
+<h3>Another Alternative</h3>
+<p>If you expect to modify transactions regularly, you may choose to use the <a href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/">CreateOrAdjustTransaction</a> API.  This method follows a slightly different bit of logic:</p>
+<ul class="normal">
+    <li>When you provide your transaction to the API, it checks to see if that transaction already exists.</li>
+    <li>If the transaction already exists, it calls AdjustTransaction.</li>
+    <li>If the transaction does not exist, it calls CreateTransaction.</li>
+</ul>
+
+<p>Using <a href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/">CreateOrAdjustTransaction</a> allows you to call the API for a specified document code without checking in advance if the transaction has yet been recorded in AvaTax.  This makes it a great option to sync up your accounting system or sales pipeline with your tax data.</p>
+
+<p>-Mark Withers Partner Launch Team</p>
+</p>
+    <p class="btn-callout"><a href="/developer-dot/blog" role="button">Back to posts</a></p>
+    <div>
+        <div>
+    <!-- Begin MailChimp Signup Form -->
+<link href="/developer-dot//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="https://avalara.us17.list-manage.com/subscribe/post?u=e2114eae65572ca4675c4ae37&amp;id=a37ce2da48" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+    <label for="mce-EMAIL">Want updates on the lastest blog posts? Sign up for our newsletter.</label>
+    <div class="input-group">
+        <input type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL" placeholder="Email Address" required/>
+        <span class="input-group-btn">
+            <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-default button"/>
+        </span>
+        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_e2114eae65572ca4675c4ae37_a37ce2da48" tabindex="-1" value=""></div>
+    </div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+</div>
+    </div>
+</div>
+
+    
+</main>
+        </section>
+         
+        <section class="row padding-sides">
+            <main class="col-md-12"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'developeravalaracom'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</main>
+        </section>
+        
+    </div>
+    <footer>
+        <ul class="global">
+            <li><a href="https://www.avalara.com/"><span class="icon-sphere"></span>Avalara.com</a></li>
+            <li><a href="https://help.avalara.com/"><span class="icon-help"></span>Help Center</a></li>
+        </ul>
+
+
+        <ul class="social">
+            <li class="twitter"><a href="https://twitter.com/avadev">Twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/avalara">Facebook</a></li>
+            <li class="linkedin"><a href="https://www.linkedin.com/company/avalara">LinkedIn</a></li>
+            <li class="youtube"><a href="https://www.youtube.com/user/Avalara1">Youtube</a></li>
+        </ul>
+        
+        
+
+
+        <ul class="legal">
+            <li>&copy; 2017 Avalara, Inc. All rights reserved</li>
+            <li><a href="https://www.avalara.com/site-terms/">Terms of use</a></li>
+            <li><a href="https://www.avalara.com/privacy-policy/">Privacy policy</a></li>
+        </ul>
+
+        <ul class="github">
+            <li class="social github-icon"><a href="https://github.com/Avalara/developer-dot/edit/master/_posts/2017-10-18-adjusting-transactions.md"><span>GH</span> Edit this page on GitHub</a></li>
+
+        </ul>
+    </footer>
+
+    <script src="/developer-dot/public/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/developer-dot/public/js/vendor/bootstrap.min.js"></script>
+    <script src="/developer-dot/public/js/site.js"></script>
+
+    
+    <script src="/developer-dot/public/js/vendor/aws-sdk-2.5.3.min.js"></script>
+    <script>
+        AWS.config.region = 'us-west-2';
+    </script>
+
+     
+
+    <!-- Adobe Dynamic Tag Manager -->
+    <script type="text/javascript">
+        _satellite.pageBottom();
+    </script>
+    <!-- End Adobe Dynamic Tag Manager -->
+</body>
+
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="robots" content="index,follow" /> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.2 - Authentication | Avalara Developer</title>
+
+    
+    <meta name="description" content="API solutions for end-to-end tax compliance">
+
+    
+    <meta property="og:title" content="1.2 - Authentication | Avalara Developer" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Avalara Developer Network" />
+    <meta property="og:description" content="API solutions for end-to-end tax compliance"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/developer-dot/public/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/developer-dot/public/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/developer-dot/public/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/developer-dot/public/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/developer-dot/public/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/developer-dot/public/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/developer-dot/public/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/developer-dot/public/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/developer-dot/public/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/developer-dot/public/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/developer-dot/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/developer-dot/public/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/developer-dot/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/developer-dot/public/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff ">
+    <meta name="msapplication-TileImage" content="/developer-dot/public/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff ">
+
+    <link rel="stylesheet" href="/developer-dot/public/css/style.css"> 
+    <!-- Adobe Dynamic Tab Manager Tag Manager -->
+    <script src="https://assets.adobedtm.com/bc10a2a9cf337c664f8f74e778a1987125aea184/satelliteLib-0387aefee1ddb8b2a9db7e4165c8d84dc0de8621.js"></script>
+    <!-- End Adobe Dynamic Tab Manager Tag Manager -->
+</head>
+ 
+
+<body id="top" data-product=avaTax>
+    <header>
+        <div class="pageTitle">
+            <a href="/developer-dot/">
+                <img src="/developer-dot/public/images/Avalara_logo.svg" alt="Avalara Developer Network">
+                <span>Developer</span>
+            </a>
+            <span class="slash">/&nbsp;</span><a href="/developer-dot/avatax">avaTax</a>
+        </div>
+        <nav class="navbar navbar-default navbar-static">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav apis ">
+                    <li class="apis visible-xs-block"><a href="/developer-dot/avalara-apis"><span class="text-uppercase">API</span>s</a></li>
+                    <li class="visible-xs-block"><a href="/developer-dot/avatax/dev-guide/"><span class="text-uppercase">AvaTax Developer Guide</span></a></li>
+                    <li class="apis dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">API</span>s <i class="caret"></i></a>
+                        <div class="dropdown-menu dropdown-menu-large">
+                            <div class="row">
+                                <div class="col-md-12"><a href="/developer-dot/avalara-apis">APIs overview</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Tax calculation</h2>
+                                    
+                                    <h4>Avalara AvaTax</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/avatax">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/avatax/dev-guide">Developer Guide</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/avatax/rest/v2">API reference</a></li>
+                                        
+                                        <br/>
+                                        <li><a href="/developer-dot/avatax/use-cases">Use Cases</a></li>
+                                        <li><a href="/developer-dot/avatax/get-started">Start your AvaTax free trial now!</a></li>
+                                    </ul>
+                                     
+                                    <h4>Avalara Communications</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/communications">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/communications/afc-rest">API reference</a></li>
+                                        
+                                    </ul>
+                                     
+                                    <h4>Avalara Excise</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/excise">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/excise/5_18_0">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2>Compliance document management</h2>
+                                    
+                                    <h4>Avalara CertCapture</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/certcapture">Overview</a></li>
+                                        
+                                        <li><a href="http://docs.certcapture6xrest.apiary.io/">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                    <h2>Returns &amp; filing</h2>
+                                     
+                                    <h4>Avalara TrustFile</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/trustfile">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/trustfile/api">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sdk dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">SDK</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li ><a href="/developer-dot/avatax/get-started">Get Started with AvaTax</a></li>
+                            <br/>
+                            <li><a href="/developer-dot/sdk/">The AvaTax SDK</a></li>
+                            <li><a href="/developer-dot/sdk/soap">SOAP SDK</a></li>
+                            <br/>
+                            <li><a target="_blank" href="https://www.nuget.org/packages/Avalara.AvaTax/">Install C# SDK via NuGet</a></li>
+                            <li><a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">Install JRE SDK via Maven</a></li>
+                            <li><a target="_blank" href="https://packagist.org/packages/avalara/avataxclient">Install PHP SDK via Composer</a></li>
+                            <li><a target="_blank" href="https://rubygems.org/gems/avatax">Install Ruby SDK via RubyGems</a></li>
+                            <li><a target="_blank" href="https://www.npmjs.com/package/avatax">Install JavaScript SDK via NPMJS</a></li>
+                        </ul>
+                    </li>
+                    <li class="tests"><a href="/developer-dot/tests/testing-your-integration/"><span class="text-uppercase">Tests</span></a></li>
+                    <!-- removing until the link to the Self-Test is fugured out -->
+                    <!--
+                    <li class="tests dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Tests</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/tests/self-test">Avalara Self-Test Tool</a></li>
+                            <li><a href="/developer-dot/tests/testing-your-integration/">Avalara Test Cases</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="certification dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggel" data-toggle="dropdown"><span class="text-uppercase">Become Certified</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/certification/">Overview</a></li>
+                            <li><a href="/developer-dot/certification/avatax/">Avalara AvaTax</a></li>
+                            <li><a href="/developer-dot/certification/communications-certification/">Avalara Communications</a></li>
+                            <li><a href="/developer-dot/certification/excise/">Avalara Excise</a></li>
+                            <li><a href="/developer-dot/certification/certcapture/">Avalara CertCapture</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Resources</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                          <li><a href="/developer-dot/resources/support">Developer Support Options</a></li>
+                          <li><a href="/developer-dot/blog">Developer Blog</a></li>
+                          <li><a href="/developer-dot/resources/webinars">Webinars</a></li>
+                          <!--<li><a href="/developer-dot/resources/preferred-developers">Preferred developers</a></li>-->
+                          <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
+                          <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/blog"><span class="text-uppercase">Developer Blog</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/developer-dot/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
+                    <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
+                </ul>
+
+
+                <a href="/developer-dot/avatax/signup/" class="btn btn-primary btn-signup">Free Trial</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid dev_guide">
+        
+          
+
+
+<div class="breadcrumbs">
+    <div class="col-md-12">
+        <ul class="pipe">
+            <li><span class="text-uppercase">Tax Calculation API</span>s</li>
+            <li class="text-uppercase"><a href="/developer-dot/avatax">Avalara avaTax</a></li>
+            <li class="text-uppercase">dev guide</li>
+        </ul>
+    </div>
+</div>
+  
+        <section class="row">
+            <main class="col-md-12">
+  
+    <div class="row padding-sides half">
+      <nav class="col-md-3">
+        <div id='the-nav' class='nav wrapper hidden-xs hidden-sm dev-guide-nav' style='height: 100%; overflow-y:auto;'>
+    <h3>Chapters</h3>
+    <ol>
+        <li ><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/">Getting Started with AvaTax</a>
+            
+            <ol>
+                <li><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/connecting-to-avatax/">Connecting to the API</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/authentication-in-avatax/">Authentication</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/troubleshooting/">Troubleshooting</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/configure-your-avatax-account/">Configure Your Account</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/chapter-summary/">Chapter Summary</a></li>
+            </ol>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/transactions/">Transactions</a>
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/customizing-transaction/">Customizing Your Transactions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/reconciliation/">Reconciliation</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/product-taxability/">Product Taxability</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/discounts-and-overrides/">Discounts and Overrides</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/shipping-and-handling/">Shipping and Handling</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/exemptions/">Exemptions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/locations/">Locations</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Consumer Use Tax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/">Calculating Tax Offline</a>
+            
+        </li>
+    </ol>
+    <!--
+    <h3>Appendices</h3>
+    <ul>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-batch-files/">Appendix: Batch Files</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-business-development/">Appendix: Business Developement</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-cloud-connect/">Appendix: Cloud Connect</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-global-taxes/">Appendix: Global Taxes</a></li>
+    </ul> -->
+
+   <!-- <h3><a href="/developer-dot/avatax/dev-guide/glossary/">Glossary</a></h3> -->
+</div>
+
+      </nav>
+      <main class="col-md-9 small-no-padding">
+        <h1>
+            1.2 - Authentication
+            
+        </h1>
+        <ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/connecting-to-avatax/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/troubleshooting/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+<p>AvaTax uses existing HTTP authentication standards: both <a class="dev-guide-link" href="https://en.wikipedia.org/wiki/Basic_access_authentication">basic HTTP authentication</a> and <a class="dev-guide-link" href="http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html">OAuth 2.0 bearer token authentication</a>. Both of these standards are well documented and have been in existence for a long time - which also means that over the past decades, many different people have implemented the standard in many different ways.  Let’s describe exactly how to authenticate your API calls in AvaTax.</p>
+
+<p>For HTTP Basic authentication, AvaTax supports two options:</p>
+
+<ul class="dev-guide-list">
+    <li>Your AvaTax username and password</li>
+    <li>Your AvaTax account number and license key</li>  
+</ul>
+
+<p>Which style of authentication should you choose?</p>
+
+<ul class="dev-guide-list">
+    <li>If you are building a connector that customers will set up and use on their premises, use <b>Account ID/License Key</b> authentication.</li>
+    <li>If you are building a web portal with direct AvaTax integration, please contact business development to see if bearer token authentication is the preferred approach.</li>
+    <li>Otherwise, use <b>Username/Password</b> authentication.</li>
+</ul>
+
+<p>Let’s review each approach.</p>
+
+<h3>Username and Password Authentication</h3>
+
+<p>The simplest type of authentication uses a username and a password.  If you use an AvaTax SDK, this encoding is done for you transparently.  Just provide your credentials and the SDK will do all the work!  For example, here’s how the AvaTax SDK for C# implements username/password authentication:</p>
+
+<div class="language-csharp highlighter-rouge"><pre class="highlight"><code><span class="c1">// Create a client and set up authentication
+</span><span class="kt">var</span> <span class="n">Client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AvaTaxClient</span><span class="p">(</span><span class="s">"MyTestApp"</span><span class="p">,</span> <span class="s">"1.0"</span><span class="p">,</span> <span class="n">Environment</span><span class="p">.</span><span class="n">MachineName</span><span class="p">,</span> <span class="n">AvaTaxEnvironment</span><span class="p">.</span><span class="n">Sandbox</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">WithSecurity</span><span class="p">(</span><span class="s">"MyUsername"</span><span class="p">,</span> <span class="s">"MyPassword"</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>If you are writing your own code, here’s how to construct an authentication token for AvaTax using your username and password:</p>
+
+<div class="mobile-table">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Start with the word <code>Basic</code> followed by username, a colon, and password.  There are no spaces between any values.</td>
+                <td><code>Basic username:password</code></td>
+            </tr>
+            <tr>
+                <td>Replace <code>username</code> with your username, and <code>password</code> with your password.  Ensure that there are no whitespace characters unless those characters are part of your username or password.</td>
+                <td><code>Basic bob@example.org:bobspasswordgoeshere</code></td>
+            </tr>
+            <tr>
+                <td>Now use your favorite <a class="dev-guide-link" href="https://www.google.com/webhp#q=base64+encoding">Base64 encoding program</a> to encode the right hand side of the string.</td>
+                <td><code>Basic Ym9iQGV4YW1wbGUub3JnOmJvYnNwYXNzd29yZGdvZXNoZXJl</code></td>
+            </tr>
+            <tr>
+                <td>Add this to the <code>Authorization</code> header in your HTTP request.</td>
+                <td><code>Authorization: Basic Ym9iQGV4YW1wbGUub3JnOmJvYnNwYXNzd29yZGdvZXNoZXJl</code></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p><br /></p>
+
+<p>Basic username and password authentication has a number of advantages and disadvantages:</p>
+
+<ul class="dev-guide-list">
+    <li>Advantages:
+        <ul class="dev-guide-list">
+            <li>An auditor can uniquely identify the user that executed every API call.</li>
+            <li>Allows different users to have different privilege levels.</li>
+            <li>Basic authentication does not expire.</li>
+            <li>All basic authentication headers are protected by strong SSL encryption in transit to Avalara.</li>
+        </ul>
+    </li>
+    <li>Disadvantages:
+        <ul class="dev-guide-list">
+            <li>Usernames and passwords can be stolen or forgotten.</li>
+            <li>Insecure passwords can be guessed by brute force. To prevent this, Avalara enforces a limit: if you fail to authenticate multiple times in a row, your account may be locked out.</li>
+        </ul>
+    </li>
+</ul>
+
+<p>Basic username and password authentication is recommended for individual users who are calling APIs within AvaTax, or for users who have limited access rights.</p>
+
+<p>It’s worth restating here: A Sandbox username will not work in Production, and a Production username will not work on Sandbox.  If you get a login failure, please check your username by logging onto the <a class="dev-guide-link" href="https://admin-development.avalara.net">AvaTax website for sandbox</a> or <a class="dev-guide-link" href="https://admin-avatax.avalara.net">AvaTax website for production</a>. That will help you determine which environment you should use.</p>
+
+<h3>Legacy License Key Authentication</h3>
+
+<p>Each AvaTax account has one (and only one!) legacy license key. Since each account is tied to one environment, this means a customer will typically have two license keys: one license key for sandbox, and one license key for production.</p>
+
+<p>A license key is generated by an account administrator on the <a class="dev-guide-link" href="https://admin-avatax.avalara.net/login.aspx?ReturnUrl=%2f">AvaTax website</a>, or by calling the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Accounts/AccountResetLicenseKey/">AccountResetLicenseKey API</a>.  For the moment, let’s focus on how to get a license key through the AvaTax website.  Here’s how to generate a license key:</p>
+
+<ul class="dev-guide-list">
+    <li>Log on to the AvaTax website for the appropriate environment.</li>
+    <li>Click on <b>Settings</b></li>
+    <li>Click on <b>Reset License Key</b></li>
+</ul>
+
+<p>As you’ll notice, this page is restricted to only account administrators. Keep in mind that you only have one license key and Avalara is unable to recover this key!</p>
+
+<p>When you generate a new license key, all older license keys are immediately revoked and no longer usable. This is helpful because if your license key is lost or stolen you can revoke it instantly. However, generating a new key is a risk because this may affect existing systems using the AvaTax calculation engine.</p>
+
+<p>Let’s construct an authorization using an Avalara License Key:</p>
+<div class="mobile-table">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Start with the word <code>Basic</code> followed by accountid and licensekey.</td>
+                <td><code>Basic accountid:licensekey</code></td>
+            </tr>
+            <tr>
+                <td>Replace <code>accountid</code> with your account ID number, and <code>licensekey</code> with the license key you generated above.  Ensure that there are no whitespace characters - an account ID and license key will never have whitespace characters of any kind.</td>
+                <td><code>Basic 123456789:123456789ABCDEF123456789ABCDEF</code></td>
+            </tr>
+            <tr>
+                <td>Now use your favorite <a class="dev-guide-link" href="https://www.google.com/webhp#q=base64+encoding">Base64 encoding program</a> to encode the right hand side of the string.</td>
+                <td><code>Basic MTIzNDU2Nzg5OjEyMzQ1Njc4OUFCQ0RFRjEyMzQ1Njc4OUFCQ0RFRg==</code></td>
+            </tr>
+            <tr>
+                <td>Add this to the <code>Authorization</code> header in your HTTP request.</td>
+                <td><code>Authorization: Basic MTIzNDU2Nzg5OjEyMzQ1Njc4OUFCQ0RFRjEyMzQ1Njc4OUFCQ0RFRg==</code></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p><br /></p>
+
+<p>Account ID/license key and username/password authentication are very similar in practice. So why would you choose one over the other? Let’s look at the advantages and disadvantages of license key authentication.</p>
+
+<ul class="dev-guide-list">
+    <li>Advantages:
+        <ul class="dev-guide-list">
+            <li>License keys have much stronger entropy when compared to a username/password, and are harder to attack.</li>
+            <li>Account ID / License Key authentication is not user-specific and will not expire if one user resets their password.</li>
+            <li>All basic authentication headers are protected by strong SSL encryption in transit to Avalara.</li>
+        </ul>
+    </li>
+    <li>Disadvantages:
+        <ul class="dev-guide-list">
+            <li>There is only one license key for each company.</li>
+            <li>Revoking your license key will cause all API calls with the old license key to fail.</li>
+            <li>It is not possible to identify individual users taking an action when license key authentication is used.</li>
+        </ul>
+    </li>
+</ul>
+
+<p>Avalara recommends using account ID / License Key authentication when implementing connectors.  Your software should have a configuration page or file that allows a customer to type in their account ID and license key when they set up your connector; then all API calls made through your connector will use these credentials.</p>
+
+<h3>Bearer Token Authentication</h3>
+
+<p>AvaTax is currently implementing support for OAuth 2.0 based bearer token authentication.  This feature is available to select partners.  To make use of the OAuth bearer token feature, please contact your account manager.</p>
+
+<ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/connecting-to-avatax/"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/troubleshooting/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+      </main>
+    </div>
+    
+
+
+
+
+
+
+</main>
+        </section>
+          
+        <section class="row padding-sides">
+            <main class="col-md-12"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'developeravalaracom'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</main>
+        </section>
+        
+    </div>
+    <footer>
+        <ul class="global">
+            <li><a href="https://www.avalara.com/"><span class="icon-sphere"></span>Avalara.com</a></li>
+            <li><a href="https://help.avalara.com/"><span class="icon-help"></span>Help Center</a></li>
+        </ul>
+
+
+        <ul class="social">
+            <li class="twitter"><a href="https://twitter.com/avadev">Twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/avalara">Facebook</a></li>
+            <li class="linkedin"><a href="https://www.linkedin.com/company/avalara">LinkedIn</a></li>
+            <li class="youtube"><a href="https://www.youtube.com/user/Avalara1">Youtube</a></li>
+        </ul>
+        
+        
+
+
+        <ul class="legal">
+            <li>&copy; 2017 Avalara, Inc. All rights reserved</li>
+            <li><a href="https://www.avalara.com/site-terms/">Terms of use</a></li>
+            <li><a href="https://www.avalara.com/privacy-policy/">Privacy policy</a></li>
+        </ul>
+
+        <ul class="github">
+            <li class="social github-icon"><a href="https://github.com/Avalara/developer-dot/edit/master/avatax/dev-guide/getting-started-with-avatax/authentication-in-avatax.md"><span>GH</span> Edit this page on GitHub</a></li>
+
+        </ul>
+    </footer>
+
+    <script src="/developer-dot/public/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/developer-dot/public/js/vendor/bootstrap.min.js"></script>
+    <script src="/developer-dot/public/js/site.js"></script>
+
+    
+    <script src="/developer-dot/public/js/vendor/aws-sdk-2.5.3.min.js"></script>
+    <script>
+        AWS.config.region = 'us-west-2';
+    </script>
+
+     
+
+    <!-- Adobe Dynamic Tag Manager -->
+    <script type="text/javascript">
+        _satellite.pageBottom();
+    </script>
+    <!-- End Adobe Dynamic Tag Manager -->
+</body>
+
+</html>

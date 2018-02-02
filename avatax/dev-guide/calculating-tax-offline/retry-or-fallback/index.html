@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="robots" content="index,follow" /> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11.2 - Retry or Fallback | Avalara Developer</title>
+
+    
+    <meta name="description" content="API solutions for end-to-end tax compliance">
+
+    
+    <meta property="og:title" content="11.2 - Retry or Fallback | Avalara Developer" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Avalara Developer Network" />
+    <meta property="og:description" content="API solutions for end-to-end tax compliance"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/developer-dot/public/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/developer-dot/public/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/developer-dot/public/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/developer-dot/public/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/developer-dot/public/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/developer-dot/public/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/developer-dot/public/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/developer-dot/public/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/developer-dot/public/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/developer-dot/public/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/developer-dot/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/developer-dot/public/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/developer-dot/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/developer-dot/public/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff ">
+    <meta name="msapplication-TileImage" content="/developer-dot/public/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff ">
+
+    <link rel="stylesheet" href="/developer-dot/public/css/style.css"> 
+    <!-- Adobe Dynamic Tab Manager Tag Manager -->
+    <script src="https://assets.adobedtm.com/bc10a2a9cf337c664f8f74e778a1987125aea184/satelliteLib-0387aefee1ddb8b2a9db7e4165c8d84dc0de8621.js"></script>
+    <!-- End Adobe Dynamic Tab Manager Tag Manager -->
+</head>
+ 
+
+<body id="top" data-product=avaTax>
+    <header>
+        <div class="pageTitle">
+            <a href="/developer-dot/">
+                <img src="/developer-dot/public/images/Avalara_logo.svg" alt="Avalara Developer Network">
+                <span>Developer</span>
+            </a>
+            <span class="slash">/&nbsp;</span><a href="/developer-dot/avatax">avaTax</a>
+        </div>
+        <nav class="navbar navbar-default navbar-static">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+                <span>Menu</span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse js-navbar-collapse">
+                <ul class="nav navbar-nav apis ">
+                    <li class="apis visible-xs-block"><a href="/developer-dot/avalara-apis"><span class="text-uppercase">API</span>s</a></li>
+                    <li class="visible-xs-block"><a href="/developer-dot/avatax/dev-guide/"><span class="text-uppercase">AvaTax Developer Guide</span></a></li>
+                    <li class="apis dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">API</span>s <i class="caret"></i></a>
+                        <div class="dropdown-menu dropdown-menu-large">
+                            <div class="row">
+                                <div class="col-md-12"><a href="/developer-dot/avalara-apis">APIs overview</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Tax calculation</h2>
+                                    
+                                    <h4>Avalara AvaTax</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/avatax">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/avatax/dev-guide">Developer Guide</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/avatax/rest/v2">API reference</a></li>
+                                        
+                                        <br/>
+                                        <li><a href="/developer-dot/avatax/use-cases">Use Cases</a></li>
+                                        <li><a href="/developer-dot/avatax/get-started">Start your AvaTax free trial now!</a></li>
+                                    </ul>
+                                     
+                                    <h4>Avalara Communications</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/communications">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/communications/afc-rest">API reference</a></li>
+                                        
+                                    </ul>
+                                     
+                                    <h4>Avalara Excise</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/excise">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/excise/5_18_0">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2>Compliance document management</h2>
+                                    
+                                    <h4>Avalara CertCapture</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/certcapture">Overview</a></li>
+                                        
+                                        <li><a href="http://docs.certcapture6xrest.apiary.io/">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                    <h2>Returns &amp; filing</h2>
+                                     
+                                    <h4>Avalara TrustFile</h4>
+                                    <ul class="pipe">
+                                        
+                                        <li><a href="/developer-dot/trustfile">Overview</a></li>
+                                        
+                                        <li><a href="/developer-dot/api-reference/trustfile/api">API reference</a></li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sdk dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">SDK</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li ><a href="/developer-dot/avatax/get-started">Get Started with AvaTax</a></li>
+                            <br/>
+                            <li><a href="/developer-dot/sdk/">The AvaTax SDK</a></li>
+                            <li><a href="/developer-dot/sdk/soap">SOAP SDK</a></li>
+                            <br/>
+                            <li><a target="_blank" href="https://www.nuget.org/packages/Avalara.AvaTax/">Install C# SDK via NuGet</a></li>
+                            <li><a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">Install JRE SDK via Maven</a></li>
+                            <li><a target="_blank" href="https://packagist.org/packages/avalara/avataxclient">Install PHP SDK via Composer</a></li>
+                            <li><a target="_blank" href="https://rubygems.org/gems/avatax">Install Ruby SDK via RubyGems</a></li>
+                            <li><a target="_blank" href="https://www.npmjs.com/package/avatax">Install JavaScript SDK via NPMJS</a></li>
+                        </ul>
+                    </li>
+                    <li class="tests"><a href="/developer-dot/tests/testing-your-integration/"><span class="text-uppercase">Tests</span></a></li>
+                    <!-- removing until the link to the Self-Test is fugured out -->
+                    <!--
+                    <li class="tests dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Tests</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/tests/self-test">Avalara Self-Test Tool</a></li>
+                            <li><a href="/developer-dot/tests/testing-your-integration/">Avalara Test Cases</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="certification dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggel" data-toggle="dropdown"><span class="text-uppercase">Become Certified</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                            <li><a href="/developer-dot/certification/">Overview</a></li>
+                            <li><a href="/developer-dot/certification/avatax/">Avalara AvaTax</a></li>
+                            <li><a href="/developer-dot/certification/communications-certification/">Avalara Communications</a></li>
+                            <li><a href="/developer-dot/certification/excise/">Avalara Excise</a></li>
+                            <li><a href="/developer-dot/certification/certcapture/">Avalara CertCapture</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources dropdown dropdown-large hidden-xs">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><span class="text-uppercase">Resources</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-menu-large">
+                          <li><a href="/developer-dot/resources/support">Developer Support Options</a></li>
+                          <li><a href="/developer-dot/blog">Developer Blog</a></li>
+                          <li><a href="/developer-dot/resources/webinars">Webinars</a></li>
+                          <!--<li><a href="/developer-dot/resources/preferred-developers">Preferred developers</a></li>-->
+                          <li><a href="https://community.avalara.com/avalara/category_sets/developers">Help Forum</a></li>
+                          <li><a href="https://avalaracommunity.force.com/partnerlaunch" target="_blank">Avalara Launch Center</a></li>
+                        </ul>
+                    </li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/resources/support"><span class="text-uppercase">Developer Support Options</span></a></li>
+                    <li class="resources visible-xs-block"><a href="/developer-dot/blog"><span class="text-uppercase">Developer Blog</span></a></li>
+                    <!--<li class="resources visible-xs-block"><a href="/developer-dot/resources/preferred-developers"><span class="text-uppercase">Preferred developers</span></a></li>-->
+                    <li class="resources visible-xs-block"><a href="https://community.avalara.com/avalara/category_sets/developers"><span class="text-uppercase">Help Forum</span></a></li>
+                </ul>
+
+
+                <a href="/developer-dot/avatax/signup/" class="btn btn-primary btn-signup">Free Trial</a>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid dev_guide">
+        
+          
+
+
+<div class="breadcrumbs">
+    <div class="col-md-12">
+        <ul class="pipe">
+            <li><span class="text-uppercase">Tax Calculation API</span>s</li>
+            <li class="text-uppercase"><a href="/developer-dot/avatax">Avalara avaTax</a></li>
+            <li class="text-uppercase">dev guide</li>
+        </ul>
+    </div>
+</div>
+  
+        <section class="row">
+            <main class="col-md-12">
+  
+    <div class="row padding-sides half">
+      <nav class="col-md-3">
+        <div id='the-nav' class='nav wrapper hidden-xs hidden-sm dev-guide-nav' style='height: 100%; overflow-y:auto;'>
+    <h3>Chapters</h3>
+    <ol>
+        <li ><a href="/developer-dot/avatax/dev-guide/getting-started-with-avatax/">Getting Started with AvaTax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/transactions/">Transactions</a>
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/customizing-transaction/">Customizing Your Transactions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/reconciliation/">Reconciliation</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/product-taxability/">Product Taxability</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/discounts-and-overrides/">Discounts and Overrides</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/shipping-and-handling/">Shipping and Handling</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/exemptions/">Exemptions</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/locations/">Locations</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/consumer-use-tax/">Consumer Use Tax</a>
+            
+        </li>
+        <li ><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/">Calculating Tax Offline</a>
+            
+            <ol>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/detecting-a-dropped-connection">Detecting a Dropped Connection</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/retry-or-fallback/">Retry or Fallback</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/tax-content-api/">Tax Content API</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/reconcile-transactions-after-outage/">Reconcile Transactions After Outage</a></li>
+                <li><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/chapter-summary/">Chapter Summary</a></li>
+            </ol>
+            
+        </li>
+    </ol>
+    <!--
+    <h3>Appendices</h3>
+    <ul>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-batch-files/">Appendix: Batch Files</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-business-development/">Appendix: Business Developement</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-cloud-connect/">Appendix: Cloud Connect</a></li>
+        <li ><a href="/developer-dot/avatax/dev-guide/appendix-global-taxes/">Appendix: Global Taxes</a></li>
+    </ul> -->
+
+   <!-- <h3><a href="/developer-dot/avatax/dev-guide/glossary/">Glossary</a></h3> -->
+</div>
+
+      </nav>
+      <main class="col-md-9 small-no-padding">
+        <h1>
+            11.2 - Retry or Fallback
+            
+        </h1>
+        <ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/detecting-a-dropped-connection"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/tax-content-api/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+<p>After your application detects a timeout, it must next make a decision whether to retry the transaction or fallback to a default tax rate.  We cannot recommend which specific approach will be right for your program, but we can encourage you to consider a few key risks when retrying a transaction:</p>
+<ul class="dev-guide-list">
+    <li>Some programs attempt to reuse HTTP connections.  In the event that you experience a connection disruption, we encourage you to create a completely new connection for the next attempt.</li>
+    <li>If you experienced a timeout, you don't know whether AvaTax received your original API call.  The API call may have been received and processed successfully, but the response was not received by your code.  If you were creating a permanent document such as a <code>SalesInvoice</code>, you should retry your transaction using <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Transactions/CreateOrAdjustTransaction/">CreateOrAdjustTransaction</a>.  This API call will work correctly in either case: if the original API call failed, the document will be created; if the original API call succeeded, the transaction will be adjusted.</li>
+</ul>
+
+<p>If you decide instead to fallback to a default rate, you have a different set of concerns:</p>
+<ul class="dev-guide-list">
+    <li>For transactions shipped around the country, a customer may not be obligated to collect tax in each jurisdiction if they do not have nexus in a jurisdiction.  If you collect tax in a jurisdiction, you are legally obligated to remit it.</li>
+    <li>Tax rates vary by product type, sourcing rules, and other considerations.  If you use a default tax rate that happens to be higher than the actual final tax rate, you are obligated to remit the "OverCollected" amount.</li>
+</ul>
+
+<p>AvaTax provides the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/TaxContent/">TaxContent APIs</a> for you to determine sensible default tax rates for your locations.  These TaxContent APIs will give you more precise tax rates for a variety of locations around the United States and is especially useful for programmers developing a retail point-of-sale (POS) based solution.  The API produces a file that contains tax rates and rules for items and locations that can be used to correctly calculate tax in the event a POS device is not able to reach AvaTax.</p>
+
+<p>Here’s how the TaxContent API works:</p>
+<ul class="dev-guide-list">
+    <li>Use the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/Locations/CreateLocations/">CreateLocation API</a> to create one location record for each physical retail presence you have.</li>
+    <li>Determine all the TaxCodes appropriate to products sold by your business.</li>
+    <li>On startup, your program should call the <a class="dev-guide-link" href="/developer-dot/api-reference/avatax/rest/v2/methods/TaxContent/BuildTaxContentFile/">BuildTaxContentFile API</a> to download default tax rates for the matrix of locations and tax codes for today.</li>
+</ul>
+
+<p>This data file will help ensure more accuracy in your tax calculation.  It is not a perfect substitute for calling CreateTransaction directly, but it is more precise than using a default rate for a postal code.</p>
+
+<div class="dev-guide-test" id="test1">
+<div class="dev-guide-test-heading">Test Case - 11.2.1 </div>
+<div class="dev-guide-test-content">
+<h4>Setup</h4>
+<ul class="dev-guide-list">
+<li>Create a location using CreateLocation</li>
+    <ul class="dev-guide-list">
+        <li>LocationCode 01</li>
+        <li>Address 100 Ravine Lane, Bainbridge Island, WA 98110</li>
+    </ul>
+<li>Create a location using CreateLocation</li>
+    <ul class="dev-guide-list">
+        <li>LocationCode 02</li>
+        <li>Address 18300 Von Karman Ave, Irvine, CA 92612</li>
+    </ul>
+<li>Call the BuildTaxContentFile API</li>
+    <ul class="dev-guide-list">
+        <li>TaxCodes: PC040100 (Clothing) and PF050112 (Soft Drinks)</li>
+        <li>LocationCodes: 01 and 02</li>
+    </ul>
+</ul>
+
+<h4>Assertions</h4>
+<ul class="dev-guide-list">
+    <li>You should receive back four lines:</li>
+    <ul class="dev-guide-list">
+        <li>Tax rates for clothing in Irvine, CA</li>
+        <li>Tax rates for soft drinks in Irvine, CA</li>
+        <li>Tax rates for clothing on Bainbridge Island, WA</li>
+        <li>Tax rates for soft drinks on Bainbridge Island, WA</li>
+    </ul>
+</ul>
+
+<div class="dev-guide-dropdown">
+    <input id="checkbox_toggle" type="checkbox" />
+    <i id="icon-up" class="glyphicon glyphicon-chevron-down"></i><i id="icon-down" class="glyphicon glyphicon-chevron-right"></i>
+    <label for="checkbox_toggle"><h4>Expected API Call</h4></label>
+    <ul class="dev-guide-dropdown-content">
+        <li>
+            <pre>
+{
+  "companyCode": "DEFAULT",
+  "documentDate": "2017-06-27T18:18:44.8781843Z",
+  "responseType": "Json",
+  "taxCodes": [
+    "PC040100",
+    "PF050112"
+  ],
+  "locationCodes": [
+    "01",
+    "02"
+  ],
+  "includeJurisCodes": true
+}
+</pre>
+        </li>
+    </ul>
+</div>
+</div>
+</div>
+
+<p>Another approach to fallback tax is to use a postal code rates table.  Avalara provides the <a class="dev-guide-link" href="">TaxRatesByPostalCode API</a> which you can use to determine the sales tax rate for tangible personal property in a jurisdiction.  This approach produces a very simple rate value, however it overlooks much of the complexity of tax law.</p>
+
+<p>Whatever approach you select, please be aware that the cardinal rule of tax auditors is what whatever amount of tax you collect, you must remit.  If you accidentally overcollect tax you must still remit the amount you collected.  If you collect tax in a jurisdiction where you are not registered as a business, you must choose to either register your business and begin filing taxes or refund the tax collected to the customer.  For specific advice on tax overcollection policies, please contact <a class="dev-guide-link" href="https://www.avalara.com/contact-us/">Avalara’s Professional Services</a> team for advice suitable to your business - this developer guide is not a substitute for obtaining professional compliance advice.</p>
+
+<p>Next, let’s look at how you can reconcile a transaction after your outage is resolved and you are back online.</p>
+
+<ul class="pager">
+  <li class="previous"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/detecting-a-dropped-connection"><i class="glyphicon glyphicon-chevron-left"></i>Previous</a></li>
+  <li class="next"><a href="/developer-dot/avatax/dev-guide/calculating-tax-offline/tax-content-api/">Next<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+
+      </main>
+    </div>
+    
+
+
+
+
+
+
+</main>
+        </section>
+          
+        <section class="row padding-sides">
+            <main class="col-md-12"><div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'developeravalaracom'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</main>
+        </section>
+        
+    </div>
+    <footer>
+        <ul class="global">
+            <li><a href="https://www.avalara.com/"><span class="icon-sphere"></span>Avalara.com</a></li>
+            <li><a href="https://help.avalara.com/"><span class="icon-help"></span>Help Center</a></li>
+        </ul>
+
+
+        <ul class="social">
+            <li class="twitter"><a href="https://twitter.com/avadev">Twitter</a></li>
+            <li class="facebook"><a href="https://www.facebook.com/avalara">Facebook</a></li>
+            <li class="linkedin"><a href="https://www.linkedin.com/company/avalara">LinkedIn</a></li>
+            <li class="youtube"><a href="https://www.youtube.com/user/Avalara1">Youtube</a></li>
+        </ul>
+        
+        
+
+
+        <ul class="legal">
+            <li>&copy; 2017 Avalara, Inc. All rights reserved</li>
+            <li><a href="https://www.avalara.com/site-terms/">Terms of use</a></li>
+            <li><a href="https://www.avalara.com/privacy-policy/">Privacy policy</a></li>
+        </ul>
+
+        <ul class="github">
+            <li class="social github-icon"><a href="https://github.com/Avalara/developer-dot/edit/master/avatax/dev-guide/calculating-tax-offline/retry-or-fallback.md"><span>GH</span> Edit this page on GitHub</a></li>
+
+        </ul>
+    </footer>
+
+    <script src="/developer-dot/public/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="/developer-dot/public/js/vendor/bootstrap.min.js"></script>
+    <script src="/developer-dot/public/js/site.js"></script>
+
+    
+    <script src="/developer-dot/public/js/vendor/aws-sdk-2.5.3.min.js"></script>
+    <script>
+        AWS.config.region = 'us-west-2';
+    </script>
+
+     
+
+    <!-- Adobe Dynamic Tag Manager -->
+    <script type="text/javascript">
+        _satellite.pageBottom();
+    </script>
+    <!-- End Adobe Dynamic Tag Manager -->
+</body>
+
+</html>
